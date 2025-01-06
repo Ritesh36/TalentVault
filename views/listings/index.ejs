@@ -1,15 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+<%- layout("./layouts/boilerplate.ejs") %>
+
 <body>
+    <form method="GET" action="/listings/new">
+        <button>Create New Listings</button>
+    </form>
     <h1>Job posts</h1>
     <% for(listing of allListings){ %>
-        <a href="/"> <%= listing.title %></a>
+        <a href="/listings/<%= listing._id %>"> <%= listing.title %></a>
         <br>
     <% } %>
 </body>
-</html>
