@@ -22,7 +22,7 @@ const initData = async () => {
     console.log("Data is initalized");
 }
 
-// initData();
+initData();
 
 const initInfoData = async () => {
     await StudentInfo.deleteMany({});
@@ -30,4 +30,4 @@ const initInfoData = async () => {
     console.log("StudentInfo data is intialized");
 }
 
-initInfoData();
+// initInfoData();
