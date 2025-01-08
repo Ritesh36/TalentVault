@@ -1,18 +1,32 @@
 <%- layout("./layouts/boilerplate.ejs") %>
 
 <body>
-    <h1>Create your listing here...</h1>
-    <form method="POST" action="/listings">
-        <input type="text" placeholder="enter title" name="listings[title]">
-        <br> <br>
-        <textarea placeholder="enter description" name="listings[description]"></textarea>
-        <br> <br>
-        <textarea placeholder="enter requirements" name="listings[requirements]"></textarea>
-        <br> <br>
-        <input type="number" placeholder="enter salary" name="listings[salary]">
-        <br> <br>
-        <input type="date" placeholder="enter date" name="listings[created_at]">
-        <br> <br>
-        <button>Post</button>
-    </form>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Create Your Listing</h1>
+        <form method="POST" action="/listings" class="p-4 border rounded shadow bg-white" style="background: #f8f9fa;">
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" class="form-control" id="title" placeholder="Enter title" name="listings[title]" required>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" id="description" placeholder="Enter description" name="listings[description]" rows="4" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="requirements" class="form-label">Requirements</label>
+                <textarea class="form-control" id="requirements" placeholder="Enter requirements" name="listings[requirements]" rows="4"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="salary" class="form-label">Salary</label>
+                <input type="number" class="form-control" id="salary" placeholder="Enter salary" name="listings[salary]" min="0" required>
+            </div>
+            <div class="mb-3">
+                <label for="date" class="form-label">Date</label>
+                <input type="date" class="form-control" id="date" name="listings[created_at]" required>
+            </div>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Post</button>
+            </div>
+        </form>
+    </div>
 </body>

@@ -63,13 +63,14 @@ app.get("/listings/:id/edit", async (req, res) => {
     res.render("listings/edit", {listing});
 })
 
+//edit.ejs  R
 app.put("/listings/:id", async (req, res) => {
     let {id} = req.params;
     const updatedListing = await Listing.findByIdAndUpdate(id, {...req.body.listings});
     res.redirect(`/listings/${id}`);
 })
 
-//Delete Route
+//Delete Route edit.ejs R
 app.delete("/listings/:id", async (req, res) => {
     let {id} = req.params;
     const deletedListing = await Listing.findByIdAndDelete(id);
