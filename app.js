@@ -63,6 +63,14 @@ app.get("/listings/:id/edit", async (req, res) => {
     res.render("listings/edit", {listing});
 })
 
+//comapny name
+app.get('/api/companies', (req, res) => {
+    const query = req.query.query.toLowerCase();
+    const companies = ['Google', 'Microsoft', 'Apple', 'Amazon', 'Facebook'];
+    const results = companies.filter(company => company.toLowerCase().includes(query));
+    res.json(results);
+});
+
 //edit.ejs  R
 app.put("/listings/:id", async (req, res) => {
     let {id} = req.params;

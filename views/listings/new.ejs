@@ -6,7 +6,8 @@
         <form method="POST" action="/listings" class="p-4 border rounded shadow bg-white" style="background: #f8f9fa;">
             <div class="mb-3">
                 <label for="title" class="form-label">Title</label>
-                <input type="text" class="form-control" id="title" placeholder="Enter title" name="listings[title]" required>
+                <input type="text" class="form-control" id="title" placeholder="Enter company name" name="listings[title]" required autocomplete="off">
+                <div id="suggestions" class="list-group position-absolute"></div>
             </div>
             <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
@@ -29,4 +30,32 @@
             </div>
         </form>
     </div>
+
+    <script>
+        document.getElementById('title').addEventListener('input', function () {
+        const query = this.value.trim();
+        if (query.length < 2) {
+            document.getElementById('suggestions').innerHTML = '';
+            return;
+        }
+
+        fetch(`https://autocomplete.clearbit.com/v1/companies/suggest?query=${query}`)
+            .then(response => response.json())
+            .then(data => {
+                const suggestions = data.map(company => `
+                    <button type="button" class="list-group-item list-group-item-action" onclick="selectCompany('${company.name}')">
+                        ${company.name}
+                    </button>
+                `).join('');
+                document.getElementById('suggestions').innerHTML = suggestions;
+            })
+            .catch(err => console.error('Error fetching companies:', err));
+    });
+
+    function selectCompany(company) {
+        document.getElementById('title').value = company;
+        document.getElementById('suggestions').innerHTML = '';
+    }
+
+    </script>
 </body>
