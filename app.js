@@ -7,6 +7,8 @@ const ejsMate = require("ejs-mate");
 const Listing = require("./models/listing");
 const StudentInfo = require("./models/studentInfo");
 const User = require("./models/user");
+const wrapAsync = require("./utils/wrapAsync");
+const ExpressError = require("./utils/ExpressError");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const passportLocalMongoose = require("passport-local-mongoose");
@@ -30,38 +32,54 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
-// app.get("/", (req, res) => {
-//     res.send("Hello from root");
-// })
 
-//Index Route
-app.get("/listings", async (req, res) => {
+
+//Index Route R
+app.get("/listings", wrapAsync(async (req, res) => {
     let allListings = await Listing.find();
     res.render("listings/index", { allListings });
-})
+}));
 
-//Create Route
-app.get("/listings/new", async (req, res) => {
+
+//Create Route R
+app.get("/listings/new", (req, res) => {
     res.render("listings/new");
 })
 
-app.post("/listings", async (req, res) => {
+app.post("/listings", wrapAsync(async (req, res) => {
     let newListing = await Listing( req.body.listings );
     newListing.save();
     res.redirect("/listings");
-})
+}));
+
 
 //Show Route
-app.get("/listings/:id", async (req, res) => {
+app.get("/listings/:id", wrapAsync(async (req, res) => {
     const listing = await Listing.findById(req.params.id);
-    res.render("listings/show", {listing});
-})
+    res.render("listings/show", { listing });
+}));
 
-//Edit Route
-app.get("/listings/:id/edit", async (req, res) => {
+
+//Edit Route R
+app.get("/listings/:id/edit", wrapAsync(async (req, res) => {
     const listing = await Listing.findById(req.params.id);
-    res.render("listings/edit", {listing});
-})
+    res.render("listings/edit", { listing });
+}));
+
+app.put("/listings/:id",wrapAsync(async (req, res) => {
+    let {id} = req.params;
+    const updatedListing = await Listing.findByIdAndUpdate(id, {...req.body.listings});
+    res.redirect(`/listings/${id}`);
+}));
+
+
+//Delete Route  R
+app.delete("/listings/:id", wrapAsync(async (req, res) => {
+    let {id} = req.params;
+    const deletedListing = await Listing.findByIdAndDelete(id);
+    res.redirect("/listings");
+}));
+
 
 //comapny name S
 app.get('/api/companies', (req, res) => {
@@ -71,18 +89,17 @@ app.get('/api/companies', (req, res) => {
     res.json(results);
 });
 
-//edit.ejs  R
-app.put("/listings/:id", async (req, res) => {
-    let {id} = req.params;
-    const updatedListing = await Listing.findByIdAndUpdate(id, {...req.body.listings});
-    res.redirect(`/listings/${id}`);
+
+app.all("*", (req, res, next) => {
+    next(new ExpressError(404, "Page not found"));
 })
 
-//Delete Route edit.ejs R
-app.delete("/listings/:id", async (req, res) => {
-    let {id} = req.params;
-    const deletedListing = await Listing.findByIdAndDelete(id);
-    res.redirect("/listings");
+
+//Error Handling  R
+app.use((err, req, res, next) => {
+    let {statusCode=500, message="Something went wrong"} = err;
+    res.status(statusCode).send(message);
+    next(err);
 })
 
 
