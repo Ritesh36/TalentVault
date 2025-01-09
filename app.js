@@ -63,7 +63,7 @@ app.get("/listings/:id/edit", async (req, res) => {
     res.render("listings/edit", {listing});
 })
 
-//comapny name
+//comapny name S
 app.get('/api/companies', (req, res) => {
     const query = req.query.query.toLowerCase();
     const companies = ['Google', 'Microsoft', 'Apple', 'Amazon', 'Facebook'];

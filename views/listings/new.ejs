@@ -33,29 +33,29 @@
 
     <script>
         document.getElementById('title').addEventListener('input', function () {
-        const query = this.value.trim();
-        if (query.length < 2) {
+            const query = this.value.trim();
+            if (query.length < 2) {
+                document.getElementById('suggestions').innerHTML = '';
+                return;
+            }
+    
+            fetch(`https://autocomplete.clearbit.com/v1/companies/suggest?query=${query}`)
+                .then(response => response.json())
+                .then(data => {
+                    const suggestions = data.map(company => `
+                        <button type="button" class="list-group-item list-group-item-action d-flex align-items-center" onclick="selectCompany('${company.name}')">
+                            <img src="${company.logo}" alt="${company.name} logo" class="me-2" style="width: 30px; height: 30px; border-radius: 50%;">
+                            <span>${company.name}</span>
+                        </button>
+                    `).join('');
+                    document.getElementById('suggestions').innerHTML = suggestions;
+                })
+                .catch(err => console.error('Error fetching companies:', err));
+        });
+    
+        function selectCompany(company) {
+            document.getElementById('title').value = company;
             document.getElementById('suggestions').innerHTML = '';
-            return;
         }
-
-        fetch(`https://autocomplete.clearbit.com/v1/companies/suggest?query=${query}`)
-            .then(response => response.json())
-            .then(data => {
-                const suggestions = data.map(company => `
-                    <button type="button" class="list-group-item list-group-item-action" onclick="selectCompany('${company.name}')">
-                        ${company.name}
-                    </button>
-                `).join('');
-                document.getElementById('suggestions').innerHTML = suggestions;
-            })
-            .catch(err => console.error('Error fetching companies:', err));
-    });
-
-    function selectCompany(company) {
-        document.getElementById('title').value = company;
-        document.getElementById('suggestions').innerHTML = '';
-    }
-
-    </script>
+    </script>    
 </body>
