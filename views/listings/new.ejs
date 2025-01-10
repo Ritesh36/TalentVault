@@ -7,13 +7,13 @@
         <h1 class="text-center mb-4">Create Your Listing</h1>
         <form method="POST" action="/listings" class="p-4 border rounded shadow bg-white" style="background: #f8f9fa;">
             
-            <!-- Title Field -->
+            <!-- Title  -->
             <div class="mb-3">
                 <label for="title" class="form-label">Job Title</label>
                 <input type="text" class="form-control" id="title" placeholder="Enter job title" name="listings[title]" required autocomplete="off">
             </div>
 
-            <!-- Company Name Field -->
+            <!-- Company Name  -->
             <div class="mb-3 position-relative">
                 <label for="company" class="form-label">Company Name</label>
                 <input type="hidden" id="logo" name="listings[logo]">
@@ -21,32 +21,27 @@
                 <div id="suggestions" class="list-group position-absolute" style="z-index: 1000;"></div>
             </div>
 
-            <!-- Description Field -->
+            <!-- Description -->
             <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
                 <textarea class="form-control" id="description" placeholder="Enter description" name="listings[description]" rows="4" required></textarea>
             </div>
 
-            <!-- Requirements Field -->
+            <!-- Requirements-->
             <div class="mb-3">
                 <label for="requirements" class="form-label">Requirements</label>
                 <textarea class="form-control" id="requirements" placeholder="Enter requirements" name="listings[requirements]" rows="4"></textarea>
             </div>
 
-            <!-- Salary Field -->
-            <div class="mb-3">
-                <label for="salary" class="form-label">Salary</label>
-                <input type="text" class="form-control" id="salary" placeholder="Ex: 3LPA-5LPA" name="listings[salary]" required>
-            </div>
 
-            <!-- Eligibility Category Field -->
+            <!-- Eligibility  -->
             <div class="mb-3">
                 <label for="eligibility" class="form-label">Eligibility Category</label>
                 <div class="dropdown">
                     <button class="btn btn-outline-secondary dropdown-toggle w-100" type="button" id="eligibilityDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                         Select Eligibility
                     </button>
-                    <ul class="dropdown-menu p-3" style="max-height: 200px; overflow-y: auto;" aria-labelledby="eligibilityDropdown">
+                    <ul class="dropdown-menu p-4" style="max-height: 800px; overflow-y: auto;font-size: 1.2rem" aria-labelledby="eligibilityDropdown">
                         <li><input type="checkbox" name="listings[eligibility][]" value="B.E" id="be"> <label for="be">B.E</label></li>
                         <li><input type="checkbox" name="listings[eligibility][]" value="B.Tech" id="btech"> <label for="btech">B.Tech</label></li>
                         <li><input type="checkbox" name="listings[eligibility][]" value="M.E" id="me"> <label for="me">M.E</label></li>
@@ -59,13 +54,19 @@
                 </div>
             </div>
 
-            <!-- Date Field -->
+            <!-- Salary -->
+            <div class="mb-3">
+                <label for="salary" class="form-label">Salary</label>
+                <input type="text" class="form-control" id="salary" placeholder="Ex: 3LPA-5LPA" name="listings[salary]" required>
+            </div>
+
+            <!-- Date -->
             <div class="mb-3">
                 <label for="date" class="form-label">Application Deadline</label>
                 <input type="date" class="form-control" id="date" name="listings[created_at]" required>
             </div>
 
-            <!-- Submit Button -->
+            <!--  Button -->
             <div class="d-grid">
                 <button type="submit" class="btn btn-primary">Post</button>
             </div>
@@ -73,7 +74,7 @@
     </div>
 
     <script>
-        // Event listener on the company input field for autocomplete suggestions
+        //  company suggestions
         document.getElementById('company').addEventListener('input', function () {
             const query = this.value.trim();
             if (query.length < 2) {
@@ -81,7 +82,7 @@
                 return;
             }
     
-            // Fetching company suggestions using Clearbit API
+            // suggestions  Clearbit API
             fetch(`https://autocomplete.clearbit.com/v1/companies/suggest?query=${query}`)
                 .then(response => response.json())
                 .then(data => {
@@ -98,7 +99,7 @@
                 .catch(err => console.error('Error fetching companies:', err));
         });
 
-        // Function to select a company from the suggestions
+       
         function selectCompany(company, logo) {
             document.getElementById('company').value = company;
             document.getElementById('logo').value = logo;
