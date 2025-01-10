@@ -4,35 +4,43 @@
     <div class="container mt-5">
         <h1 class="text-center mb-4">Create Your Listing</h1>
         <form method="POST" action="/listings" class="p-4 border rounded shadow bg-white" style="background: #f8f9fa;" novalidate>
+
             <div class="mb-3">
                 <label for="title" class="form-label">Title</label>
                 <input type="text" class="form-control" id="title" placeholder="Enter company name" name="listings[title]" required autocomplete="off">
                 <div id="suggestions" class="list-group position-absolute"></div>
                 <div class="invalid-feedback">Enter a valid title name! </div>
             </div>
+
             <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
                 <textarea class="form-control" id="description" placeholder="Enter description" name="listings[description]" rows="4" required></textarea>
                 <div class="invalid-feedback">Description is required!</div>
             </div>
+
             <div class="mb-3">
                 <label for="requirements" class="form-label">Requirements</label>
                 <textarea class="form-control" id="requirements" placeholder="Enter requirements" name="listings[requirements]" rows="4"></textarea>
                 <div class="invalid-feedback">Enter a valid Requirements!</div>
             </div>
-            <div class="mb-3">
+
+            <div class="col-md-6">
                 <label for="salary" class="form-label">Salary</label>
-                <input type="number" class="form-control" id="salary" placeholder="Enter salary" name="listings[salary]" min="0" required>
+                <input type="number" class="form-control" id="salary"  placeholder="Enter salary" name="listings[salary]" min="0" required>
                 <div class="invalid-feedback">Enter a valid salary!</div>
+              </div>
+
+            <div class="col-sm-4">
+                <div class="form-check">
+                  <label class="form-check-label" for="date">Date</label>
+                  <input class="form-check-input" type="date" id="date" name="listings[created_at]" required>
+                  <div class="invalid-feedback"></div>
+                </div>
             </div>
-            <div class="mb-3">
-                <label for="date" class="form-label">Date</label>
-                <input type="date" class="form-control" id="date" name="listings[created_at]" required>
-                <div class="invalid-feedback"></div>
-            </div>
-            <div class="d-grid">
-                <button type="submit" class="btn btn-primary">Post</button>
-            </div>
+            
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">POST</button>
+              </div>
         </form>
     </div>
 
