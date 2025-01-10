@@ -48,14 +48,18 @@ app.get("/listings/new", (req, res) => {
 
 app.post("/listings", wrapAsync(async (req, res) => {
     let newListing = await Listing( req.body.listings );
+    if(!req.body.listings){
+        throw new ExpressError(400, "Invalid Listing Data");
+    }
     newListing.save();
     res.redirect("/listings");
 }));
 
 
-//Show Route
+//Show Route R
 app.get("/listings/:id", wrapAsync(async (req, res) => {
-    const listing = await Listing.findById(req.params.id);
+    let { id } = req.params;
+    const listing = await Listing.findById(id);
     res.render("listings/show", { listing });
 }));
 
@@ -66,7 +70,7 @@ app.get("/listings/:id/edit", wrapAsync(async (req, res) => {
     res.render("listings/edit", { listing });
 }));
 
-app.put("/listings/:id",wrapAsync(async (req, res) => {
+app.put("/listings/:id", wrapAsync(async (req, res) => {
     let {id} = req.params;
     const updatedListing = await Listing.findByIdAndUpdate(id, {...req.body.listings});
     res.redirect(`/listings/${id}`);
@@ -90,16 +94,16 @@ app.get('/api/companies', (req, res) => {
 });
 
 
+// Catch-all route for undefined routes
 app.all("*", (req, res, next) => {
     next(new ExpressError(404, "Page not found"));
 })
 
 
-//Error Handling  R
+//Error Handling Middleware  R
 app.use((err, req, res, next) => {
-    let {statusCode=500, message="Something went wrong"} = err;
-    res.status(statusCode).send(message);
-    next(err);
+    const {statusCode=500, message="Something went wrong"} = err;
+    res.render("error", {message});
 })
 
 
