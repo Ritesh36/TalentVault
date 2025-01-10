@@ -7,7 +7,6 @@
     object-fit: cover;  
     border: 2px solid #ccc;
 }
-
 </style>
 <body>
     <form method="GET" action="/listings/new">
@@ -21,7 +20,7 @@
                     <!-- Title -->
                     <div class="d-flex align-items-center mb-2">
                         <img src="<%= listing.logo %>" alt="Company Logo" class="rounded-circle-img">
-                        <h5 class="card-title m-0"><%= listing.title %></h5>
+                        <h5 class="card-title m-1"><%= listing.title %></h5>
                     </div>                    
                     <!-- Company Details-->
                     <h6 class="card-subtitle mb-2 text-muted"><%= listing.company %></h6>
