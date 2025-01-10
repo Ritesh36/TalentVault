@@ -9,13 +9,13 @@
         <% for(let listing of allListings) { %>
             <div class="card mb-3" style="width: 18rem;">
                 <div class="card-body">
-                    <!-- Display logo in front of the title -->
+                    <!-- Title -->
                     <div class="d-flex align-items-center mb-2">
                         <img src="<%= listing.logo %>" alt="Company Logo" 
                              class="me-2" style="width: 40px; height: 40px; border-radius: 50%;">
                         <h5 class="card-title m-0"><%= listing.title %></h5>
                     </div>
-                    <!-- Display company name below the title -->
+                    <!-- Company Details-->
                     <h6 class="card-subtitle mb-2 text-muted"><%= listing.company %></h6>
                     <p class="card-text"><%= listing.description %></p>
                     <a href="/listings/<%= listing._id %>" class="card-link">Details</a>
