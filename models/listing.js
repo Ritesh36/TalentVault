@@ -30,8 +30,8 @@ const listingSchema = mongoose.Schema({
         required: true
     },
     salary: {
-        type: Number,
-        default: 0
+        type: String,
+        default: "Not specified"
     },
     created_at: {
         type: Date,
