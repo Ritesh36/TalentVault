@@ -21,38 +21,71 @@
                 <div id="suggestions" class="list-group position-absolute" style="z-index: 1000;"></div>
             </div>
 
+            <div class="row mb-3">
+                <!-- Job Location -->
+                <div class="col-md-6">
+                    <label for="location" class="form-label">Job Location</label>
+                    <input type="text" class="form-control" id="location" placeholder="Enter job location" name="listings[location]" required autocomplete="off" list="locationSuggestions">
+                    <datalist id="locationSuggestions"></datalist>
+                </div>                
+            
+                <!-- Job Type -->
+                <div class="col-md-6">
+                    <label for="jobType" class="form-label">Job Type</label>
+                    <select class="form-select" id="jobType" name="listings[jobType]" required>
+                        <option value="">Select job type</option>
+                        <option value="Full-Time">Full-Time</option>
+                        <option value="Part-Time">Part-Time</option>
+                        <option value="Internship">Internship</option>
+                        <option value="Contract">Contract</option>
+                    </select>
+                </div>
+            </div>
+
             <!-- Description -->
             <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
                 <textarea class="form-control" id="description" placeholder="Enter description" name="listings[description]" rows="4" required></textarea>
             </div>
 
-            <!-- Requirements-->
+            <!-- Requirements (Point-by-Point) -->
             <div class="mb-3">
-                <label for="requirements" class="form-label">Requirements</label>
-                <textarea class="form-control" id="requirements" placeholder="Enter requirements" name="listings[requirements]" rows="4"></textarea>
-            </div>
-
-
-            <!-- Eligibility  -->
-            <div class="mb-3">
-                <label for="eligibility" class="form-label">Eligibility Category</label>
-                <div class="dropdown">
-                    <button class="btn btn-outline-secondary dropdown-toggle w-100" type="button" id="eligibilityDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                        Select Eligibility
-                    </button>
-                    <ul class="dropdown-menu p-4" style="max-height: 800px; overflow-y: auto;font-size: 1.2rem" aria-labelledby="eligibilityDropdown">
-                        <li><input type="checkbox" name="listings[eligibility][]" value="B.E" id="be"> <label for="be">B.E</label></li>
-                        <li><input type="checkbox" name="listings[eligibility][]" value="B.Tech" id="btech"> <label for="btech">B.Tech</label></li>
-                        <li><input type="checkbox" name="listings[eligibility][]" value="M.E" id="me"> <label for="me">M.E</label></li>
-                        <li><input type="checkbox" name="listings[eligibility][]" value="M.Tech" id="mtech"> <label for="mtech">M.Tech</label></li>
-                        <li><input type="checkbox" name="listings[eligibility][]" value="Diploma" id="diploma"> <label for="diploma">Diploma</label></li>
-                        <li><input type="checkbox" name="listings[eligibility][]" value="B.Sc" id="bsc"> <label for="bsc">B.Sc</label></li>
-                        <li><input type="checkbox" name="listings[eligibility][]" value="M.Sc" id="msc"> <label for="msc">M.Sc</label></li>
-                        <li><input type="checkbox" name="listings[eligibility][]" value="Ph.D" id="phd"> <label for="phd">Ph.D</label></li>
-                    </ul>
+                <label for="requirementInput" class="form-label">Requirements</label>
+                <div class="input-group mb-2">
+                    <input type="text" class="form-control" id="requirementInput" placeholder="Enter a requirement" autocomplete="off">
+                    <button type="button" class="btn btn-outline-secondary" onclick="addRequirement()">Add</button>
                 </div>
+                <ul id="requirementList" class="list-group"></ul>
+                <input type="hidden" name="listings[requirements]" id="requirementsField">
             </div>
+
+            <div class="row mb-3">
+                <!-- Eligibility Category -->
+                <div class="col-md-6">
+                    <label for="eligibility" class="form-label">Eligibility Category</label>
+                    <div class="dropdown">
+                        <button class="btn btn-outline-secondary dropdown-toggle w-100" type="button" id="eligibilityDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            Select Eligibility
+                        </button>
+                        <ul class="dropdown-menu p-4" style="max-height: 800px; overflow-y: auto; font-size: 1.2rem" aria-labelledby="eligibilityDropdown">
+                            <li><input type="checkbox" name="listings[eligibility][]" value="B.E" id="be"> <label for="be">B.E</label></li>
+                            <li><input type="checkbox" name="listings[eligibility][]" value="B.Tech" id="btech"> <label for="btech">B.Tech</label></li>
+                            <li><input type="checkbox" name="listings[eligibility][]" value="M.E" id="me"> <label for="me">M.E</label></li>
+                            <li><input type="checkbox" name="listings[eligibility][]" value="M.Tech" id="mtech"> <label for="mtech">M.Tech</label></li>
+                            <li><input type="checkbox" name="listings[eligibility][]" value="Diploma" id="diploma"> <label for="diploma">Diploma</label></li>
+                            <li><input type="checkbox" name="listings[eligibility][]" value="B.Sc" id="bsc"> <label for="bsc">B.Sc</label></li>
+                            <li><input type="checkbox" name="listings[eligibility][]" value="M.Sc" id="msc"> <label for="msc">M.Sc</label></li>
+                            <li><input type="checkbox" name="listings[eligibility][]" value="Ph.D" id="phd"> <label for="phd">Ph.D</label></li>
+                        </ul>
+                    </div>
+                </div>
+            
+                <!-- Application Deadline -->
+                <div class="col-md-6">
+                    <label for="date" class="form-label">Application Deadline</label>
+                    <input type="date" class="form-control" id="date" name="listings[created_at]" required>
+                </div>
+            </div>            
 
             <!-- Salary -->
             <div class="mb-3">
@@ -60,11 +93,7 @@
                 <input type="text" class="form-control" id="salary" placeholder="Ex: 3LPA-5LPA" name="listings[salary]" required>
             </div>
 
-            <!-- Date -->
-            <div class="mb-3">
-                <label for="date" class="form-label">Application Deadline</label>
-                <input type="date" class="form-control" id="date" name="listings[created_at]" required>
-            </div>
+            
 
             <!--  Button -->
             <div class="d-grid">
@@ -74,7 +103,73 @@
     </div>
 
     <script>
-        //  company suggestions
+        const locationInput = document.getElementById('location');
+        const suggestionList = document.getElementById('locationSuggestions');
+
+        locationInput.addEventListener('input', function () {
+            const query = this.value.trim();
+
+            if (query.length < 2) {
+                suggestionList.innerHTML = '';
+                return;
+            }
+
+            // Replace 'YOUR_API_KEY' with your actual Google Places API key
+            fetch(`https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${query}&types=(cities)&key=YOUR_API_KEY`)
+                .then(response => response.json())
+                .then(data => {
+                    suggestionList.innerHTML = '';
+
+                    if (data.status === 'OK') {
+                        data.predictions.forEach(prediction => {
+                            const option = document.createElement('option');
+                            option.value = prediction.description;
+                            suggestionList.appendChild(option);
+                        });
+                    }
+                })
+                .catch(err => console.error('Error fetching location suggestions:', err));
+        });
+
+
+        //add requirement Function
+        function addRequirement() {
+            const input = document.getElementById('requirementInput');
+            const list = document.getElementById('requirementList');
+            const hiddenField = document.getElementById('requirementsField');
+            const requirement = input.value.trim();
+
+            if (requirement) {
+                // Create list item
+                const listItem = document.createElement('li');
+                listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
+                listItem.innerHTML = `
+                    ${requirement}
+                    <button type="button" class="btn btn-sm btn-danger" onclick="removeRequirement(this)">Remove</button>
+                `;
+                list.appendChild(listItem);
+
+                
+                updateRequirementsField();
+                input.value = ''; 
+            }
+        }
+
+        // Function to remove a requirement
+        function removeRequirement(button) {
+            const listItem = button.parentElement;
+            listItem.remove();
+            updateRequirementsField();
+        }
+
+        // Function to update the hidden input field with all requirements
+        function updateRequirementsField() {
+            const listItems = document.querySelectorAll('#requirementList li');
+            const requirements = Array.from(listItems).map(item => item.textContent.trim());
+            document.getElementById('requirementsField').value = requirements.join('; ');
+        }
+
+        //  Company suggestions
         document.getElementById('company').addEventListener('input', function () {
             const query = this.value.trim();
             if (query.length < 2) {
@@ -82,7 +177,7 @@
                 return;
             }
     
-            // suggestions  Clearbit API
+            // Suggestions - Clearbit API
             fetch(`https://autocomplete.clearbit.com/v1/companies/suggest?query=${query}`)
                 .then(response => response.json())
                 .then(data => {
@@ -99,7 +194,6 @@
                 .catch(err => console.error('Error fetching companies:', err));
         });
 
-       
         function selectCompany(company, logo) {
             document.getElementById('company').value = company;
             document.getElementById('logo').value = logo;
