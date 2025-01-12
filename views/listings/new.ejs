@@ -48,11 +48,10 @@
         <h1 class="text-center mb-4">Create Your Listing</h1>
         <form method="POST" action="/listings" class="p-4 border rounded shadow bg-white" style="background: #f8f9fa;">
             
-            <!-- Title Field -->
+            <!-- Title  -->
             <div class="mb-3">
                 <label for="title" class="form-label">Job Title</label>
                 <input type="text" class="form-control" id="title" placeholder="Enter job title" name="listings[title]" required autocomplete="off">
-                <div class="invalid-feedback">Enter a valid job title!</div>
             </div>
 
             <!-- Company Name  -->
@@ -61,7 +60,6 @@
                 <input type="hidden" id="logo" name="listings[logo]">
                 <input type="text" class="form-control" id="company" placeholder="Enter company name" name="listings[company]" required autocomplete="off">
                 <div id="suggestions" class="list-group position-absolute" style="z-index: 1000;"></div>
-                <div class="invalid-feedback">Enter a valid company name!</div>
             </div>
 
             <div class="row mb-3">
@@ -86,7 +84,7 @@
                 </div>
             </div>
 
-            <!-- Description Field -->
+            <!-- Description -->
             <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
                 <div class="input-group mb-3">
@@ -98,30 +96,36 @@
                 <input type="hidden" name="listings[description]" id="descriptionField">
             </div>
 
-            <!-- Requirements-->
+            <!-- Requirements (Point-by-Point) -->
             <div class="mb-3">
-                <label for="requirements" class="form-label">Requirements</label>
-                <textarea class="form-control" id="requirements" placeholder="Enter requirements" name="listings[requirements]" rows="4"></textarea>
+                <label for="requirementInput" class="form-label">Requirements</label>
+                <div class="input-group mb-2">
+                    <input type="text" class="form-control" id="requirementInput" placeholder="Enter a requirement" autocomplete="off">
+                    <button type="button" class="btn btn-outline-secondary" onclick="addRequirement()">Add</button>
+                </div>
+                <ul id="requirementList" class="list-group"></ul>
+                <input type="hidden" name="listings[requirements]" id="requirementsField">
             </div>
 
-
-            <!-- Eligibility  -->
-            <div class="mb-3">
-                <label for="eligibility" class="form-label">Eligibility Category</label>
-                <div class="dropdown">
-                    <button class="btn btn-outline-secondary dropdown-toggle w-100" type="button" id="eligibilityDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                        Select Eligibility
-                    </button>
-                    <ul class="dropdown-menu p-4" style="max-height: 800px; overflow-y: auto;font-size: 1.2rem" aria-labelledby="eligibilityDropdown">
-                        <li><input type="checkbox" name="listings[eligibility][]" value="B.E" id="be"> <label for="be">B.E</label></li>
-                        <li><input type="checkbox" name="listings[eligibility][]" value="B.Tech" id="btech"> <label for="btech">B.Tech</label></li>
-                        <li><input type="checkbox" name="listings[eligibility][]" value="M.E" id="me"> <label for="me">M.E</label></li>
-                        <li><input type="checkbox" name="listings[eligibility][]" value="M.Tech" id="mtech"> <label for="mtech">M.Tech</label></li>
-                        <li><input type="checkbox" name="listings[eligibility][]" value="Diploma" id="diploma"> <label for="diploma">Diploma</label></li>
-                        <li><input type="checkbox" name="listings[eligibility][]" value="B.Sc" id="bsc"> <label for="bsc">B.Sc</label></li>
-                        <li><input type="checkbox" name="listings[eligibility][]" value="M.Sc" id="msc"> <label for="msc">M.Sc</label></li>
-                        <li><input type="checkbox" name="listings[eligibility][]" value="Ph.D" id="phd"> <label for="phd">Ph.D</label></li>
-                    </ul>
+            <div class="row mb-3">
+                <!-- Eligibility Category -->
+                <div class="col-md-6">
+                    <label for="eligibility" class="form-label">Eligibility Category</label>
+                    <div class="dropdown">
+                        <button class="btn btn-outline-secondary dropdown-toggle w-100" type="button" id="eligibilityDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            Select Eligibility
+                        </button>
+                        <ul class="dropdown-menu p-4" style="max-height: 800px; overflow-y: auto; font-size: 1.2rem" aria-labelledby="eligibilityDropdown">
+                            <li><input type="checkbox" name="listings[eligibility][]" value="B.E" id="be"> <label for="be">B.E</label></li>
+                            <li><input type="checkbox" name="listings[eligibility][]" value="B.Tech" id="btech"> <label for="btech">B.Tech</label></li>
+                            <li><input type="checkbox" name="listings[eligibility][]" value="M.E" id="me"> <label for="me">M.E</label></li>
+                            <li><input type="checkbox" name="listings[eligibility][]" value="M.Tech" id="mtech"> <label for="mtech">M.Tech</label></li>
+                            <li><input type="checkbox" name="listings[eligibility][]" value="Diploma" id="diploma"> <label for="diploma">Diploma</label></li>
+                            <li><input type="checkbox" name="listings[eligibility][]" value="B.Sc" id="bsc"> <label for="bsc">B.Sc</label></li>
+                            <li><input type="checkbox" name="listings[eligibility][]" value="M.Sc" id="msc"> <label for="msc">M.Sc</label></li>
+                            <li><input type="checkbox" name="listings[eligibility][]" value="Ph.D" id="phd"> <label for="phd">Ph.D</label></li>
+                        </ul>
+                    </div>
                 </div>
             
                 <!-- Application Deadline -->
@@ -134,7 +138,7 @@
             <!-- Salary -->
             <div class="mb-3">
                 <label for="salary" class="form-label">Salary</label>
-                <input type="number" class="form-control" id="salary" placeholder="Enter salary" name="listings[salary]" min="0" required>
+                <input type="text" class="form-control" id="salary" placeholder="Ex: 3LPA-5LPA" name="listings[salary]" required>
             </div>
 
             <!--  Button -->
