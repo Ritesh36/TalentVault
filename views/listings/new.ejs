@@ -48,10 +48,11 @@
         <h1 class="text-center mb-4">Create Your Listing</h1>
         <form method="POST" action="/listings" class="p-4 border rounded shadow bg-white" style="background: #f8f9fa;">
             
-            <!-- Title  -->
+            <!-- Title Field -->
             <div class="mb-3">
                 <label for="title" class="form-label">Job Title</label>
                 <input type="text" class="form-control" id="title" placeholder="Enter job title" name="listings[title]" required autocomplete="off">
+                <div class="invalid-feedback">Enter a valid job title!</div>
             </div>
 
             <!-- Company Name  -->
@@ -60,6 +61,7 @@
                 <input type="hidden" id="logo" name="listings[logo]">
                 <input type="text" class="form-control" id="company" placeholder="Enter company name" name="listings[company]" required autocomplete="off">
                 <div id="suggestions" class="list-group position-absolute" style="z-index: 1000;"></div>
+                <div class="invalid-feedback">Enter a valid company name!</div>
             </div>
 
             <div class="row mb-3">
@@ -84,27 +86,16 @@
                 </div>
             </div>
 
-            <!-- Description -->
+            <!-- Description Field -->
             <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" id="descriptionInput" placeholder="Enter a Description Point" autocomplete="off">
-                    <button type="button" class="btn btn-outline-secondary" onclick="addDescriptionPoint()">Add</button>
-
-                </div>
-                <ul id="descriptionList" class="list-group"></ul>
-                <input type="hidden" name="listings[description]" id="descriptionField">
+                <textarea class="form-control" id="description" placeholder="Enter description" name="listings[description]" rows="4" required></textarea>
             </div>
 
-            <!-- Requirements (Point-by-Point) -->
+            <!-- Requirements-->
             <div class="mb-3">
-                <label for="requirementInput" class="form-label">Requirements</label>
-                <div class="input-group mb-2">
-                    <input type="text" class="form-control" id="requirementInput" placeholder="Enter a requirement" autocomplete="off">
-                    <button type="button" class="btn btn-outline-secondary" onclick="addRequirement()">Add</button>
-                </div>
-                <ul id="requirementList" class="list-group"></ul>
-                <input type="hidden" name="listings[requirements]" id="requirementsField">
+                <label for="requirements" class="form-label">Requirements</label>
+                <textarea class="form-control" id="requirements" placeholder="Enter requirements" name="listings[requirements]" rows="4"></textarea>
             </div>
 
             <div class="row mb-3">
@@ -131,19 +122,21 @@
                 <!-- Application Deadline -->
                 <div class="col-md-6">
                     <label for="date" class="form-label">Application Deadline</label>
-                    <input type="date" class="form-control" id="date" name="listings[deadline]" required>
+                    <input type="date" class="form-control" id="date" name="listings[created_at]" required>
                 </div>
-            </div>            
+            </div>
 
             <!-- Salary -->
             <div class="mb-3">
                 <label for="salary" class="form-label">Salary</label>
-                <input type="text" class="form-control" id="salary" placeholder="Ex: 3LPA-5LPA" name="listings[salary]" required>
+                <input type="number" class="form-control" id="salary" placeholder="Enter salary" name="listings[salary]" min="0" required>
             </div>
 
+            
+
             <!--  Button -->
-            <div class="text-center">
-                <button type="submit" class="custom-btn px-5"><span>POST</span></button>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Post</button>
             </div>
             
             
