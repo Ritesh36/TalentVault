@@ -6,9 +6,14 @@ const listingSchema = mongoose.Schema({
         required: true
     },
     description: {
-        type: String,
+        type: [String],  
         required: true,
-        minLength: 10
+        validate: {
+            validator: function(value) {
+                return value.length > 0;
+            },
+            message: 'At least one requirement is required.'
+        },
     },
     logo: {
         type: String,
@@ -25,9 +30,24 @@ const listingSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    requirements: {
+    location: {
         type: String,
         required: true
+    },
+    jobType: {
+        type: String,
+        required: true,
+        enum: ['Full-Time', 'Part-Time', 'Internship', 'Contract']
+    },
+    requirements: {
+        type: [String],  
+        required: true,
+        validate: {
+            validator: function(value) {
+                return value.length > 0;
+            },
+            message: 'At least one requirement is required.'
+        }
     },
     salary: {
         type: String,

@@ -1,7 +1,48 @@
 <%- layout("./layouts/boilerplate.ejs") %>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<style>
+    .custom-btn {
+        position: relative;
+        overflow: hidden;
+        color: white;
+        border: 2px solid Green;
+        border-radius: 10px;
+        background: Green;
+        transition: color 0.4s, background 0.4s;
+        font-weight: bolder;
+        padding: 6px;
+    }
 
+    .custom-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: white;
+        z-index: 0;
+        opacity: 0;
+        transition: opacity 0.4s;
+    }
+
+    .custom-btn:hover::before {
+        opacity: 1;
+    }
+
+    .custom-btn:hover {
+        color: green;
+        font-weight: bolder;
+        background: white;
+    }
+
+    .custom-btn span {
+        position: relative;
+        z-index: 1;
+    }
+
+</style>
 <body>
     <div class="container mt-5">
         <h1 class="text-center mb-4">Create Your Listing</h1>
@@ -25,10 +66,11 @@
                 <!-- Job Location -->
                 <div class="col-md-6">
                     <label for="location" class="form-label">Job Location</label>
-                    <input type="text" class="form-control" id="location" placeholder="Enter job location" name="listings[location]" required autocomplete="off" list="locationSuggestions">
-                    <datalist id="locationSuggestions"></datalist>
-                </div>                
-            
+                    <input type="text" class="form-control" id="location" placeholder="Enter job location" name="listings[location]" required autocomplete="off">
+                    <!-- Custom suggestion list -->
+                    <ul id="locationSuggestions" class="list-group position-absolute" style="z-index: 1000; max-height: 200px; overflow-y: auto; display: none;"></ul>
+                </div>
+              
                 <!-- Job Type -->
                 <div class="col-md-6">
                     <label for="jobType" class="form-label">Job Type</label>
@@ -45,7 +87,13 @@
             <!-- Description -->
             <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
-                <textarea class="form-control" id="description" placeholder="Enter description" name="listings[description]" rows="4" required></textarea>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" id="descriptionInput" placeholder="Enter a Description Point" autocomplete="off">
+                    <button type="button" class="btn btn-outline-secondary" onclick="addDescriptionPoint()">Add</button>
+
+                </div>
+                <ul id="descriptionList" class="list-group"></ul>
+                <input type="hidden" name="listings[description]" id="descriptionField">
             </div>
 
             <!-- Requirements (Point-by-Point) -->
@@ -83,7 +131,7 @@
                 <!-- Application Deadline -->
                 <div class="col-md-6">
                     <label for="date" class="form-label">Application Deadline</label>
-                    <input type="date" class="form-control" id="date" name="listings[created_at]" required>
+                    <input type="date" class="form-control" id="date" name="listings[deadline]" required>
                 </div>
             </div>            
 
@@ -93,16 +141,57 @@
                 <input type="text" class="form-control" id="salary" placeholder="Ex: 3LPA-5LPA" name="listings[salary]" required>
             </div>
 
-            
-
             <!--  Button -->
-            <div class="d-grid">
-                <button type="submit" class="btn btn-primary">Post</button>
+            <div class="text-center">
+                <button type="submit" class="custom-btn px-5"><span>POST</span></button>
             </div>
+            
+            
         </form>
     </div>
 
     <script>
+        // Function to add a description point
+        function addDescriptionPoint() {
+    const input = document.getElementById('descriptionInput');
+    const list = document.getElementById('descriptionList');
+    const hiddenField = document.getElementById('descriptionField');
+    const point = input.value.trim();
+
+    if (point) {
+        // Create list item
+        const listItem = document.createElement('li');
+        listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
+        listItem.innerHTML = `
+            ${point}
+            <button type="button" class="btn btn-sm btn-danger" onclick="removeDescriptionPoint(this)">Remove</button>
+        `;
+
+        // Append the new item at the end of the list (queue-like behavior)
+        list.appendChild(listItem);
+
+        updateDescriptionField();
+        input.value = ''; 
+    }
+}
+
+
+        // Function to remove a description point
+        function removeDescriptionPoint(button) {
+            const listItem = button.parentElement;
+            listItem.remove();
+            updateDescriptionField();
+        }
+
+        // Function to update the hidden input field with all description points
+        function updateDescriptionField() {
+            const listItems = document.querySelectorAll('#descriptionList li');
+            const points = Array.from(listItems).map(item => item.textContent.trim());
+            document.getElementById('descriptionField').value = points.join('; ');
+        }
+
+
+        // location
         const locationInput = document.getElementById('location');
         const suggestionList = document.getElementById('locationSuggestions');
 
@@ -111,26 +200,44 @@
 
             if (query.length < 2) {
                 suggestionList.innerHTML = '';
+                suggestionList.style.display = 'none';
                 return;
             }
-
-            // Replace 'YOUR_API_KEY' with your actual Google Places API key
-            fetch(`https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${query}&types=(cities)&key=YOUR_API_KEY`)
+            fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${query}&addressdetails=1&limit=5`)
                 .then(response => response.json())
                 .then(data => {
-                    suggestionList.innerHTML = '';
-
-                    if (data.status === 'OK') {
-                        data.predictions.forEach(prediction => {
-                            const option = document.createElement('option');
-                            option.value = prediction.description;
-                            suggestionList.appendChild(option);
+                    suggestionList.innerHTML = ''; 
+                    if (data.length > 0) {
+                        data.forEach(location => {
+                            if (location.address && location.address.city) {
+                                const listItem = document.createElement('li');
+                                listItem.className = 'list-group-item list-group-item-action';
+                                listItem.textContent = location.address.city;
+                                listItem.addEventListener('click', function () {
+                                    locationInput.value = location.address.city; 
+                                    suggestionList.innerHTML = ''; 
+                                    suggestionList.style.display = 'none';
+                                });
+                                suggestionList.appendChild(listItem);
+                            }
                         });
+                        suggestionList.style.display = 'block';
+                    } else {
+                        suggestionList.style.display = 'none'; 
                     }
                 })
-                .catch(err => console.error('Error fetching location suggestions:', err));
+                .catch(err => {
+                    console.error('Error fetching location suggestions:', err);
+                    suggestionList.style.display = 'none'; 
+                });
         });
 
+        document.addEventListener('click', function (event) {
+            if (!locationInput.contains(event.target) && !suggestionList.contains(event.target)) {
+                suggestionList.innerHTML = ''; 
+                suggestionList.style.display = 'none'; 
+            }
+        });
 
         //add requirement Function
         function addRequirement() {
@@ -149,7 +256,6 @@
                 `;
                 list.appendChild(listItem);
 
-                
                 updateRequirementsField();
                 input.value = ''; 
             }

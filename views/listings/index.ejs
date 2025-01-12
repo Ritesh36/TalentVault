@@ -1,33 +1,138 @@
-<%- layout("./layouts/boilerplate.ejs") %>
 <style>
+    .card {
+        border: 1px solid #ddd;
+        border-radius: 10px; 
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+        padding: 16px;
+        background-color: #fff; 
+        max-width: 350px; 
+        margin: 16px; 
+        font-family: Arial, sans-serif; 
+    }
+
+    .card-header {
+        display: flex; 
+        align-items: flex-start; 
+    }
+
+    .logo-column {
+        flex: 0 0 60px; 
+        display: flex;
+        justify-content: center; 
+        align-items: center;
+    }
+
+    .details-column {
+        flex: 1; 
+        padding-left: 12px; 
+    }
+
     .rounded-circle-img {
-    width: 50px;        
-    height: 50px;     
-    border-radius: 50%; 
-    object-fit: cover;  
-    border: 2px solid #ccc;
-}
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #eee;
+    }
+
+    .card-title {
+        font-size: 18px;
+        font-weight: bold;
+        margin: 0;
+    }
+
+    .card-subtitle {
+        font-size: 14px;
+        color: #777;
+        margin: 4px 0 8px 0;
+    }
+
+    .application-info {
+        font-size: 13px;
+        color: #555;
+        margin-bottom: 8px;
+    }
+
+    .eligibility-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 8px;
+    }
+
+    .eligibility-border {
+        border: 1px solid #ddd;
+        padding: 6px 12px;
+        border-radius: 20px;
+        background-color: #f8f8f8;
+        font-size: 12px;
+        color: #555;
+    }
+
+    .card-link {
+        display: inline-block;
+        margin-top: 16px;
+        color: #007bff;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .card-link:hover {
+        text-decoration: underline;
+    }
 </style>
 <body>
     <form method="GET" action="/listings/new">
         <button>Create New Listings</button>
     </form>
     <h1>Job Posts</h1>
+
     <div class="rows mt-3">
-        <% for(let listing of allListings) { %>
-            <div class="card mb-3" style="width: 18rem;">
-                <div class="card-body">
-                    <!-- Title -->
-                    <div class="d-flex align-items-center mb-2">
-                        <img src="<%= listing.logo %>" alt="Company Logo" class="rounded-circle-img">
-                        <h5 class="card-title m-1"><%= listing.title %></h5>
-                    </div>                    
-                    <!-- Company Details-->
-                    <h6 class="card-subtitle mb-2 text-muted"><%= listing.company %></h6>
-                    <p class="card-text"><%= listing.description %></p>
-                    <a href="/listings/<%= listing._id %>" class="card-link">Details</a>
-                </div>
-            </div>
-        <% } %>
+        <script>
+            // Function to calculate the days left
+            function calculateDaysLeft(deadline) {
+                const currentDate = new Date();
+                const deadlineDate = new Date(deadline);
+                const timeDiff = deadlineDate - currentDate;
+                const daysLeft = Math.floor(timeDiff / (1000 * 3600 * 24));
+                return daysLeft >= 0 ? daysLeft : 'Expired';
+            }
+
+            // Sort listings by days left
+            const sortedListings = <%- JSON.stringify(allListings) %>.map(listing => {
+                const daysLeft = calculateDaysLeft(listing.deadline);
+                return { ...listing, daysLeft };
+            }).sort((a, b) => {
+                if (a.daysLeft === 'Expired' && b.daysLeft !== 'Expired') return 1;
+                if (b.daysLeft === 'Expired' && a.daysLeft !== 'Expired') return -1;
+                return a.daysLeft - b.daysLeft;
+            });
+
+            // Render sorted cards
+            sortedListings.forEach(listing => {
+                const daysLeftText = listing.daysLeft === 'Expired' ? 'Expired' : `${listing.daysLeft} days left`;
+
+                document.write(`
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="logo-column">
+                                <img src="${listing.logo}" alt="Company Logo" class="rounded-circle-img">
+                            </div>
+                            <div class="details-column">
+                                <h5 class="card-title">${listing.title}</h5>
+                                <h6 class="card-subtitle">${listing.company}</h6>
+                                <div class="application-info">
+                                    <p>${listing.appliedCount} applied &bull; ${daysLeftText}</p>
+                                </div>
+                                <div class="eligibility-row">
+                                    ${listing.eligibility.map(item => `<span class="eligibility-border">${item}</span>`).join('')}
+                                </div>
+                            </div>
+                        </div>
+                        <a href="/listings/${listing._id}" class="card-link">Details</a>
+                    </div>
+                `);
+            });
+        </script>
     </div>
 </body>
