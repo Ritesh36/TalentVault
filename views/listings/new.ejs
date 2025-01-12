@@ -153,27 +153,27 @@
     <script>
         // Function to add a description point
         function addDescriptionPoint() {
-    const input = document.getElementById('descriptionInput');
-    const list = document.getElementById('descriptionList');
-    const hiddenField = document.getElementById('descriptionField');
-    const point = input.value.trim();
+            const input = document.getElementById('descriptionInput');
+            const list = document.getElementById('descriptionList');
+            const hiddenField = document.getElementById('descriptionField');
+            const point = input.value.trim();
 
-    if (point) {
-        // Create list item
-        const listItem = document.createElement('li');
-        listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
-        listItem.innerHTML = `
-            ${point}
-            <button type="button" class="btn btn-sm btn-danger" onclick="removeDescriptionPoint(this)">Remove</button>
-        `;
+            if (point) {
+                // Create list item
+                const listItem = document.createElement('li');
+                listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
+                listItem.innerHTML = `
+                    ${point}
+                    <button type="button" class="btn btn-sm btn-danger" onclick="removeDescriptionPoint(this)">Remove</button>
+                `;
 
-        // Append the new item at the end of the list (queue-like behavior)
-        list.appendChild(listItem);
+                // Append the new item at the end of the list (queue-like behavior)
+                list.appendChild(listItem);
 
-        updateDescriptionField();
-        input.value = ''; 
-    }
-}
+                updateDescriptionField();
+                input.value = ''; 
+            }
+        }
 
 
         // Function to remove a description point
