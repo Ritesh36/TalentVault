@@ -1,14 +1,49 @@
 <%- layout("./layouts/boilerplate.ejs") %>
+<style>
+     @keyframes slideIn {
+        0% {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        50% {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        100% {
+            transform: translateX(-100%);
+            opacity: 0;
+        }
+    }
+    @keyframes slideOut {
+        0% {
+            transform: translateX(-100%);
+            opacity: 0;
+        }
+        50% {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        100% {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+    }
 
+    .logo-animation, .company-animation {
+        animation: slideIn 6s ease-in-out, slideOut 6s ease-in-out 6s;
+        animation-iteration-count: infinite;
+        animation-delay: 3s;
+    }
+</style>
 <body>
     <div class="container mt-5">
         <!-- Header with logo and company name, centered -->
         <div class="header d-flex justify-content-center align-items-center mb-3">
             <!-- Logo: Increased size, smaller than the company name -->
-            <img src="<%= listing.logo %>" alt="<%= listing.company %> Logo" style="max-width: 90px; max-height: 90px; margin-right: 15px;margin-top: 50px; margin-bottom: 50px;border: 2px solid #000;border:1px solid rgb(49, 51, 51);border-radius:50% ;">
+            <img src="<%= listing.logo %>" alt="<%= listing.company %> Logo" class="logo-animation" style="max-width: 90px; max-height: 90px; margin-right: 15px;margin-top: 50px; margin-bottom: 50px;border: 2px solid #000;border:1px solid rgb(49, 51, 51);border-radius:50% ;">
         
            
-            <h2 class="mb-0" style="font-size: 4.5rem; margin-bottom: 0;"> <%= listing.company %></h2>
+            <h2 class="mb-0 company-animation" style="font-size: 4.5rem; margin-bottom: 0;"> <%= listing.company %></h2>
         </div>
         
 
