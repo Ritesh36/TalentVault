@@ -48,38 +48,26 @@
         
 
         <ul class="list-group">
-            <div class="card" style="width: 18rem;">
-                <img src="<%= listing.logo %>" class="card-img-top" alt="<%= listing.company %> Logo">
-                <div class="card-body">
-                  <h2 class="card-title"><%= listing.company %></h2>
+            <div class="card" style="width: 28rem;">
+                <div class="d-flex align-items-center p-3">
+                  <img src="<%= listing.logo %>" class="card-img-top" alt="<%= listing.company %> Logo" style="width: 50px; height: 50px; border-radius: 50%;">
+                  <div class="ml-3">
+                    <h2 class="card-title mb-0"><%= listing.title %></h2>
+                    <p class="card-text"><%= listing.company %></p>
+                  </div>
                 </div>
                 <ul class="list-group list-group-flush">
-                  <li class="list-group-item"><strong>Title:</strong> <%= listing.title %></li>
                   <li class="list-group-item"><strong>Location:</strong> <%= listing.location %></li>
                 </ul>
             </div>
             <li class="list-group-item"><strong>Description:</strong>
-                <ul>
-                    <% listing.description.forEach(desc => { %>
-                        <li><%= desc %></li>
-                    <% }) %>
-                </ul>
+              <ul>
+                <% listing.description.forEach(desc => { %>
+                  <li><%= desc %></li>
+                <% }) %>
+              </ul>
             </li>
-            <li class="list-group-item"><strong>Requirements:</strong>
-                <ul>
-                    <% listing.requirements.forEach(req => { %>
-                        <li><%= req %></li>
-                    <% }) %>
-                </ul>
-            </li>
-            
-            <li class="list-group-item"><strong>Salary:</strong> &#8377; <%= listing.salary.toLocaleString('en-IN') %></li>
-            <li class="list-group-item"><strong>Location:</strong> <%= listing.location %></li>
-            <li class="list-group-item"><strong>Job Type:</strong> <%= listing.jobType %></li>
-            <li class="list-group-item"><strong>Eligibility:</strong> <%= listing.eligibility.join(", ") %></li>
-            <li class="list-group-item"><strong>Application Deadline:</strong> <%= listing.deadline.toDateString() %></li>
-            <li class="list-group-item"><strong>Posted On:</strong> <%= listing.created_at.toDateString() %></li>
-        </ul>
+          </ul>
 
         <!-- Edit Button -->
         <form method="GET" action="/listings/<%= listing._id %>/edit" class="mt-3">
