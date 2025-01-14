@@ -46,24 +46,36 @@
         
 
         <ul class="list-group">
-            <div class="card" style="max-width: 100%;">
+            <div class="card" style="max-width: 100%; border: none; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
                 <div class="d-flex align-items-center p-3">
                     <img src="<%= listing.logo %>" class="card-img-top" alt="<%= listing.company %> Logo" style="width: 70px; height: 70px;border: 1px solid #ccc; border-radius: 50%;">
                     <div class="ml-3" style="margin-left: 15px;">
                         <h2 class="card-title mb-0"><%= listing.title %></h2>
-                        <p class="card-text;font-size:35px"><%= listing.company %></p>
+                        <p class="card-text" style="font-size: 20px;"><%= listing.company %></p>
                     </div>
                 </div>
-                <ul class="list-group" style="border: none; margin-top: -20px;">
-                    <li class="list-group-item" style="border: none;">
-                        <strong>
-                            <a title="location icons">
-                                <img src="/images/location.png" alt="Location Icon" style="width: 16px; height: 16px;">
-                            </a>
-                        </strong> 
-                        <%= listing.location %>
-                    </li>
-                </ul>
+                <div style="margin-left: 5px;">
+                    <ul class="list-group" style="border: none; margin-top: -15px;">
+                        <li class="list-group-item" style="border: none;">
+                            <strong>
+                                <a title="location icons">
+                                    <img src="/images/location.png" alt="Location Icon" style="width: 16px; height: 16px;margin-right: 5px;">
+                                </a>
+                            </strong> 
+                            <%= listing.location %>
+                        </li>
+                    </ul>
+                    <ul class="list-group" style="border: none; margin-top: -10px;">
+                        <li class="list-group-item" style="border: none;">
+                            <strong>
+                                <a title="Update icons">
+                                    <img src="/images/calendar.png" alt="Calendar Icon" style="width: 16px; height: 16px;margin-right: 5px;">
+                                </a>
+                            </strong> 
+                            <strong>Updated On: </strong><%= new Date(listing.created_at).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}) %>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <li class="list-group-item"><strong>Description:</strong>
               <ul>
