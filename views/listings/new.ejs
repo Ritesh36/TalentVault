@@ -36,29 +36,25 @@
         background: white;
     }
 
-    .custom-btn span {
-        position: relative;
-        z-index: 1;
-    }
     .animated-border {
         position: relative;
         padding: 20px;
         border: 2px solid transparent;
-        border-radius: 10px;
+        border-radius: 15px;
         background: linear-gradient(white, white) padding-box, 
-                    linear-gradient(to right, #ff7e5f, #feb47b) border-box;
+                    linear-gradient(to right, #ccc, black) border-box;
         animation: borderAnimation 3s infinite;
     }
 
     @keyframes borderAnimation {
         0% {
-            border-color: #ff7e5f;
+            border-color: #e7d4cf;
         }
         50% {
-            border-color: #feb47b;
+            border-color: #ccc;
         }
         100% {
-            border-color: #ff7e5f;
+            border-color: black;
         }
     }
 
@@ -66,7 +62,7 @@
 <body>
     <div class="container mt-5">
         <h1 class="text-center mb-4">Post Job Description</h1>
-        <form method="POST" action="/listings" class="p-4 border rounded shadow bg-white" style="background: #f8f9fa;">
+        <form method="POST" action="/listings" class="animated-border shadow bg-white" style="background: #f8f9fa;">
             
             <!-- Title  -->
             <div class="mb-3">
