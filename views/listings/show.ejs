@@ -48,7 +48,16 @@
         
 
         <ul class="list-group">
-            <li class="list-group-item"><strong>Title:</strong> <%= listing.title %></li>
+            <div class="card" style="width: 18rem;">
+                <img src="<%= listing.logo %>" class="card-img-top" alt="<%= listing.company %> Logo">
+                <div class="card-body">
+                  <h2 class="card-title"><%= listing.company %></h2>
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item"><strong>Title:</strong> <%= listing.title %></li>
+                  <li class="list-group-item"><strong>Location:</strong> <%= listing.location %></li>
+                </ul>
+            </div>
             <li class="list-group-item"><strong>Description:</strong>
                 <ul>
                     <% listing.description.forEach(desc => { %>
@@ -63,6 +72,7 @@
                     <% }) %>
                 </ul>
             </li>
+            
             <li class="list-group-item"><strong>Salary:</strong> &#8377; <%= listing.salary.toLocaleString('en-IN') %></li>
             <li class="list-group-item"><strong>Location:</strong> <%= listing.location %></li>
             <li class="list-group-item"><strong>Job Type:</strong> <%= listing.jobType %></li>
