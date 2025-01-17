@@ -30,6 +30,7 @@
     }
 
     #header {
+        margin-top: 50px;
         position: relative;
         width: 100%;
         padding: 100px 100px;
@@ -39,7 +40,7 @@
     }
 
     .container-fluid {
-        padding: 20px 15px;
+        padding: 300px 15px;
     }
 
     .card {
@@ -90,8 +91,31 @@
     .btn-hover-effect:hover::before {
         left: 100%;
     }
-
     @media (max-width: 768px) {
+        .container-fluid {
+            padding: 170px 15px;
+        }
+        #header {
+            flex-direction: column;
+            text-align: center;
+            padding: 40px 5px;
+        }
+        #header img {
+            margin-right: 0;
+            margin-bottom: 10px;
+        }
+        #header h2 {
+            font-size: 1rem;
+        }
+    }
+    @media (max-width: 768px) {
+        #header img {
+            margin-right: 0;
+            margin-bottom: 10px;
+        }
+        .container-fluid {
+            padding: 260px 15px;
+        }
         .card-title {
             font-size: 1.2rem;
         }
@@ -111,6 +135,9 @@
     }
 
     @media (max-width: 576px) {
+        .container-fluid {
+            padding: 260px 15px;
+        }
         .logo-animation {
             max-width: 40px;
             max-height: 40px;
@@ -124,8 +151,10 @@
             font-size: 0.9rem;
         }
     }
-
     @media (max-width: 400px) {
+        .container-fluid {
+            padding: 260px 15px;
+        }
         .logo-animation {
             width: 60px;
             height: 60px;
@@ -141,17 +170,18 @@
     }
 </style>
 
-<div id="header" class="header d-flex justify-content-center align-items-center mb-3">
-    <img src="<%= listing.logo %>" alt="<%= listing.company %> Logo" class="logo-animation" style="max-width: 70px; max-height: 70px; margin-right: 15px; border: 2px solid #000; border-radius: 50%;">
-    <h2 class="mb-0 company-animation" style="font-size: 3rem;">
-        <% listing.company.split('').forEach((char, index) => { %>
-            <span style="--index: <%= index %>;"><%= char %></span>
-        <% }) %>
-    </h2>
-</div>
+
 
 <body style="margin: 0; padding: 0;">
-    <div class="container-fluid">
+    <div id="header" class="header d-flex justify-content-center align-items-center mb-3" style="position: absolute; top: 0; left: 0; right: 0; width: 100%; z-index: 10;">
+        <img src="<%= listing.logo %>" alt="<%= listing.company %> Logo" class="logo-animation" style="max-width: 70px; max-height: 70px; margin-right: 15px; border: 2px solid #000; border-radius: 50%;">
+        <h2 class="mb-0 company-animation" style="font-size: 3rem;">
+            <% listing.company.split('').forEach((char, index) => { %>
+                <span style="--index: <%= index %>;"><%= char %></span>
+            <% }) %>
+        </h2>
+    </div>
+    <div class="container-fluid mt-100 pt-105">
         <div class="card">
             <div class="card-header p-3">
                 <div class="d-flex align-items-center">
