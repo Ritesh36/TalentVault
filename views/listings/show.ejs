@@ -47,6 +47,7 @@
         border: none;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         margin-bottom: 20px;
+        overflow: hidden;
     }
 
     .card img {
@@ -90,6 +91,18 @@
 
     .btn-hover-effect:hover::before {
         left: 100%;
+    }
+    .custom-img {
+        position: absolute;
+        bottom: -12px;
+        right: -12px;
+        width: 90px !important;
+        height: 90px !important;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 5px solid #ccc;
+        padding: 14px;
+        background-color: #cad9db;
     }
     @media (max-width: 768px) {
         .container-fluid {
@@ -232,57 +245,62 @@
             </div>
         </div>
 
-        <div class="card p-3">
+        <div class="card p-3" style="overflow: hidden;">
             <h4>Additional Information</h4>
             <div class="row mt-3">
-                <div class="col-md-6 ">
-                    <div class="card p-3">
+                <div class="col-md-6">
+                    <div class="card p-3 position-relative">
                         <div class="card-body">
                             <h5><strong>Location:</strong></h5>
                             <p class="card-text"><%= listing.location %></p>
                         </div>
+                        <img src="/images/locate.png" alt="Location" class="card-img custom-img" />
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="card p-3">
+                    <div class="card p-3 position-relative">
                         <div class="card-body">
                             <h5><strong>Job Type:</strong></h5>
                             <p class="card-text"><%= listing.jobType %></p>
                         </div>
+                        <img src="/images/writer.png" alt="Job Type" class="card-img custom-img" />
                     </div>
                 </div>
             </div>
-            
             <div class="row mt-3">
                 <div class="col-md-6">
-                    <div class="card p-3">
+                    <div class="card p-3 position-relative">
                         <div class="card-body">
                             <h5><strong>Salary:</strong></h5>
                             <p class="card-text"><%= listing.salary || 'Not specified' %></p>
                         </div>
+                        <img src="/images/salary.png" alt="Salary" class="card-img custom-img" />
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="card p-3">
+                    <div class="card p-3 position-relative">
                         <div class="card-body">
-                            <h5><strong>Eligibility:</strong></h5>
+                            <h5><strong>Job Type:</strong></h5>
                             <p class="card-text"><%= listing.eligibility %></p>
                         </div>
+                        <img src="/images/graduation-cap.png" alt="Job Type" class="card-img custom-img" />
                     </div>
-                </div>
             </div>
         </div>
-
-        <!-- Edit Button -->
-        <form method="GET" action="/listings/<%= listing._id %>/edit" class="mt-3">
-            <button type="submit" class="btn btn-warning w-100">Edit</button>
-        </form>
-
-        <!-- Delete Button -->
-        <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE" class="mt-3">
-            <button type="submit" class="btn btn-danger w-100">Delete</button>
-        </form>
     </div>
+
+    <!-- Edit Button and Delete Button in a div -->
+<!-- Edit Button and Delete Button in a div -->
+<div class="button-container mt-3 d-flex gap-2">
+    <form method="GET" action="/listings/<%= listing._id %>/edit">
+        <button type="submit" class="btn btn-warning w-100 p-2">Edit</button>
+    </form>
+
+    <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE">
+        <button type="submit" class="btn btn-danger w-100  p-2">Delete</button>
+    </form>
+</div>
+    
 
     <script>
         const gradients = [

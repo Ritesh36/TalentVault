@@ -99,7 +99,7 @@
             }
 
             // Sort listings by days left
-            const sortedListings = <%- JSON.stringify(allListings) %>.map(listing => {
+            const sortedListings = <% JSON.stringify(allListings) %>.map(listing => {
                 const daysLeft = calculateDaysLeft(listing.deadline);
                 return { ...listing, daysLeft };
             }).sort((a, b) => {
