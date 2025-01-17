@@ -1,37 +1,32 @@
 <%- layout("./layouts/boilerplate.ejs") %>
 
 <style>
-    .custom-btn {
+    .btn-hover-effect {
         position: relative;
         overflow: hidden;
-        color: white;
-        border: 2px solid Green;
-        border-radius: 10px;
-        background: Green;
-        transition: color 0.4s, background 0.4s;
-        font-weight: bolder;
-        padding: 6px;
+        transition: background-color 0.3s ease, color 0.3s ease;
     }
 
-    .custom-btn::before {
+    .btn-hover-effect::before {
         content: '';
         position: absolute;
         top: 0;
-        left: 0;
+        left: -100%;
         width: 100%;
         height: 100%;
-        background: white;
+        background: rgba(255, 255, 255, 0.5);
+        transition: left 0.5s;
         z-index: 0;
         opacity: 0;
-        transition: opacity 0.4s;
     }
 
-    .custom-btn:hover::before {
+    .btn-hover-effect:hover::before {
+        left: 100%;
         opacity: 1;
     }
 
-    .custom-btn:hover {
-        color: green;
+    .btn-hover-effect:hover {
+        color: white !important;
         font-weight: bolder;
         background: white;
     }
@@ -41,9 +36,6 @@
         padding: 20px;
         border: 2px solid transparent;
         border-radius: 15px;
-        background: linear-gradient(white, white) padding-box, 
-                    linear-gradient(to right, #ccc, black) border-box;
-        animation: borderAnimation 3s infinite;
     }
 
     @keyframes borderAnimation {
@@ -159,7 +151,7 @@
 
             <!--  Button -->
             <div class="text-center">
-                <button type="submit" class="custom-btn px-5"><span>POST</span></button>
+                <button type="button" class="btn btn-primary btn-hover-effect" style="background-color: green; border: 2px solid green;">Quick Apply</button>
             </div>
             
             
