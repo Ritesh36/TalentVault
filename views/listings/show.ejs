@@ -229,19 +229,19 @@
                 <h4><strong>Description:</strong></h4>
                 <ul>
                     <% listing.description.forEach(desc => { %>
-                        <% desc.split('.').forEach(point => { %>
+                        <% desc.split(';').forEach(point => { %>
                             <% if (point.trim()) { %>
                                 <li><%= point.trim() %></li>
                             <% } %>
-                        <% }) %>
-                    <% }) %>
+                        <% }); %>
+                    <% }); %>
                 </ul>
             </div>
             <div class="card-body">
                 <h4><strong>Requirements:</strong></h4>
                 <ul>
                     <% listing.requirements.forEach(req => { %>
-                        <% req.split('.').forEach(point => { %>
+                        <% req.split(';').forEach(point => { %>
                             <% if (point.trim()) { %>
                                 <li><%= point.trim() %></li>
                             <% } %>

@@ -193,7 +193,7 @@
 
         // Function to update the hidden input field with all description points
         function updateDescriptionField() {
-            const listItems = document.querySelectorAll('#descriptionList li');
+            const listItems = document.querySelectorAll('#descriptionList li .description-text');
             const points = Array.from(listItems).map(item => item.textContent.trim());
             document.getElementById('descriptionField').value = points.join('; ');
         }
@@ -247,7 +247,7 @@
             }
         });
 
-        //add requirement Function
+        // Function to add a requirement
         function addRequirement() {
             const input = document.getElementById('requirementInput');
             const list = document.getElementById('requirementList');
@@ -259,7 +259,7 @@
                 const listItem = document.createElement('li');
                 listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
                 listItem.innerHTML = `
-                    ${requirement}
+                    <span class="requirement-text">${requirement}</span>
                     <button type="button" class="btn btn-sm btn-danger" onclick="removeRequirement(this)">Remove</button>
                 `;
                 list.appendChild(listItem);
@@ -278,7 +278,7 @@
 
         // Function to update the hidden input field with all requirements
         function updateRequirementsField() {
-            const listItems = document.querySelectorAll('#requirementList li');
+            const listItems = document.querySelectorAll('#requirementList li .requirement-text');
             const requirements = Array.from(listItems).map(item => item.textContent.trim());
             document.getElementById('requirementsField').value = requirements.join('; ');
         }
