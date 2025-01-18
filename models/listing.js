@@ -17,7 +17,7 @@ const listingSchema = mongoose.Schema({
     },
     logo: {
         type: String,
-        default: "/images/building.png",
+        default: "https://default.logo.url/path/to/default/logo.png",
         validate: {
             validator: function(value) {
                 const urlRegex = /^(ftp|http|https):\/\/[^ "\n]+$/;
