@@ -160,6 +160,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"></script>
      <script>
         // Function to add a description point
+        // Function to add a description point
         function addDescriptionPoint() {
             const input = document.getElementById('descriptionInput');
             const list = document.getElementById('descriptionList');
@@ -171,24 +172,17 @@
                 const listItem = document.createElement('li');
                 listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
                 listItem.innerHTML = `
-                    ${point}
+                    <span class="description-text">${point}</span>
                     <button type="button" class="btn btn-sm btn-danger" onclick="removeDescriptionPoint(this)">Remove</button>
                 `;
 
-                // Append the new item at the end of the list (queue-like behavior)
+                // Append the new item to the list
                 list.appendChild(listItem);
 
+                // Update the hidden field with new data
                 updateDescriptionField();
-                input.value = ''; 
+                input.value = ''; // Clear the input
             }
-        }
-
-
-        // Function to remove a description point
-        function removeDescriptionPoint(button) {
-            const listItem = button.parentElement;
-            listItem.remove();
-            updateDescriptionField();
         }
 
         // Function to update the hidden input field with all description points
@@ -196,9 +190,16 @@
             const listItems = document.querySelectorAll('#descriptionList li .description-text');
             const points = Array.from(listItems).map(item => item.textContent.trim());
             document.getElementById('descriptionField').value = points.join('; ');
+            console.log('Updated descriptionField value:', document.getElementById('descriptionField').value);
         }
 
-
+            // Function to update the hidden input field with all description points
+        function updateDescriptionField() {
+            const listItems = document.querySelectorAll('#descriptionList li .description-text');
+            const points = Array.from(listItems).map(item => item.textContent.trim());
+            document.getElementById('descriptionField').value = points.join('; ');
+            console.log('Updated descriptionField value:', document.getElementById('descriptionField').value);
+        }
         // location
         const locationInput = document.getElementById('location');
         const suggestionList = document.getElementById('locationSuggestions');
