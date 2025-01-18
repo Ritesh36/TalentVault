@@ -47,7 +47,7 @@ app.get("/listings/new", (req, res) => {
 })
 
 app.post("/listings", wrapAsync(async (req, res) => {
-    let newListing = await Listing( req.body.listings );
+    let newListing = await Listing(req.body.listings );
     if(!req.body.listings){
         throw new ExpressError(400, "Invalid Listing Data");
     }
