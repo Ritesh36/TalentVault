@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Job Listings</title>
     <style>
+        /* Your original CSS styles */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -19,58 +20,61 @@
             height: 100vh;
         }
 
-        .header {
-            padding: 16px;
-            background-color: #007bff;
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .header button {
-            padding: 10px 20px;
-            background-color: #fff;
-            color: #007bff;
-            border: none;
-            border-radius: 4px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .header button:hover {
-            background-color: #f0f0f0;
-        }
-
         .content {
             display: flex;
-            flex: 1;
-            height: calc(160vh - 64px);
+            flex: 1.5;
+            height: calc(110vh - 74px);
+            margin-top: 20px;
+            margin-left: 20px;
         }
 
         .left-section {
-            flex: 1.2;
-            margin-left: -46px;
+            flex: 2.3;
             overflow-y: auto;
-            background-color: white;
             padding: 5px;
             border-right: 2px solid #ddd;
+            margin-left: -30px;
+            border-color: white;
             box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1);
         }
+        .left-section::-webkit-scrollbar {
+            width: 3px; 
+            height: 10px !important;
+        }
+        .left-section::-webkit-scrollbar-thumb {
+            background-color: #ccc; 
+            border-radius: 10px;
+        }
+
+        .left-section::-webkit-scrollbar-thumb:hover {
+            background-color: #555; 
+        }
+
 
         .right-section {
-            flex: 2;
+            flex: 4; 
             padding: 16px;
             background-color: #fff;
             overflow-y: auto;
         }
 
-        .card {
-            /* border: 1px solid #ddd; */
+        .right-section::-webkit-scrollbar {
+            width: 3px; 
+            height: 8px !important;
+        }
+
+        .right-section::-webkit-scrollbar-thumb {
+            background-color: #ccc; 
             border-radius: 10px;
+        }
+
+        .right-section::-webkit-scrollbar-thumb:hover {
+            background-color: #555; 
+        }
+
+        .card {
+            /* border-radius: 10px; */
             padding: 10px;
-            background-color: white;
             margin-bottom: 10px;
             cursor: pointer;
             transition: transform 0.2s ease, box-shadow 0.3s ease;
@@ -84,10 +88,11 @@
         .card-header {
             display: flex;
             align-items: flex-start;
+            background-color: white;
         }
 
         .logo-column {
-            flex: 0 0 60px;
+            flex: 0 0 50px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -122,13 +127,6 @@
             color: #555;
         }
 
-        .eligibility-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-top: 8px;
-        }
-
         .eligibility-row span {
             border: 1px solid #ddd;
             padding: 6px 12px;
@@ -138,32 +136,18 @@
             color: #555;
         }
 
-        #job-details {
-            text-align: center;
-            color: #555;
-        }
-
         #job-details h3 {
             margin-top: 20%;
             font-size: 24px;
         }
-
-        #job-details p {
-            font-size: 16px;
+        .card.selected {
+            border-left: 5px solid blue; 
         }
+
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Header -->
-        <!-- <div class="header">
-            <h1 style="margin: 0; font-size: 20px;">Job Listings</h1>
-            <form method="GET" action="/listings/new">
-                <button>Create New Listings</button>
-            </form>
-        </div> -->
-
-        <!-- Content -->
         <div class="content">
             <!-- Left Section -->
             <div class="left-section">
@@ -176,22 +160,24 @@
                         return daysLeft >= 0 ? daysLeft : 'Expired';
                     }
 
-                    const sortedListings = <%- JSON.stringify(allListings) %>.map(listing => {
+                    // Process and sort listings
+                    const sortedListings = <%- JSON.stringify(allListings) %>.map((listing, index) => {
                         const daysLeft = calculateDaysLeft(listing.deadline);
-                        return { ...listing, daysLeft };
+                        return { ...listing, daysLeft, originalIndex: index };
                     }).sort((a, b) => {
                         if (a.daysLeft === 'Expired' && b.daysLeft !== 'Expired') return 1;
                         if (b.daysLeft === 'Expired' && a.daysLeft !== 'Expired') return -1;
                         return a.daysLeft - b.daysLeft;
                     });
 
-                    sortedListings.forEach((listing, index) => {
+                    // Render job cards
+                    sortedListings.forEach((listing) => {
                         const daysLeftText = listing.daysLeft === 'Expired' ? 'Expired' : `${listing.daysLeft} days left`;
 
                         document.write(`
-                            <div class="card" onclick="showDetails(${index})">
-                                <div class="card-header">
-                                    <div class="logo-column">
+                            <div class="card" onclick="showDetails(${listing.originalIndex})" id="job-card-${listing.originalIndex}">
+                                <div class="card-header" style="border:none">
+                                    <div class="logo-column" style="border:1px solid #ccc; border-radius:50%">
                                         <img src="${listing.logo}" alt="Company Logo">
                                     </div>
                                     <div class="details-column">
@@ -208,6 +194,13 @@
                             </div>
                         `);
                     });
+
+                    
+                    window.onload = function() {
+                        const firstValidJob = sortedListings.find(listing => listing.daysLeft !== 'Expired');
+                        const firstJobIndex = firstValidJob ? firstValidJob.originalIndex : sortedListings[0].originalIndex;
+                        showDetails(firstJobIndex);
+                    };
                 </script>
             </div>
 
@@ -224,26 +217,78 @@
 
         function showDetails(index) {
             const listing = listings[index];
+            if (!listing) {
+                console.error("Listing not found at index " + index);
+                return;
+            }
+            
+            // Remove 'selected' class from all job cards
+            const allCards = document.querySelectorAll('.card');
+            allCards.forEach(card => card.classList.remove('selected'));
+
+            // Add 'selected' class to the clicked card
+            const selectedCard = document.getElementById('job-card-' + index);
+            if (selectedCard) {
+                selectedCard.classList.add('selected');
+            }
+
             const jobDetails = document.getElementById('job-details');
             jobDetails.innerHTML = `
-                <div style="padding: 16px; border: 1px solid #ddd; border-radius: 10px; background-color: white; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
-                    <h2 style="font-size: 24px; font-weight: bold; margin-bottom: 8px;">${listing.title}</h2>
-                    <h4 style="font-size: 20px; color: #555; margin-bottom: 16px;">${listing.company}</h4>
-                    <p><strong>Location:</strong> ${listing.location}</p>
-                    <p><strong>Type:</strong> ${listing.jobType}</p>
-                    <p><strong>Salary:</strong> ${listing.salary || 'Not specified'}</p>
-                    <p><strong>Requirements:</strong></p>
-                    <ul style="padding-left: 20px;">
-                        ${listing.requirements.map(req => `<li>${req}</li>`).join('')}
-                    </ul>
-                    <p><strong>Eligibility:</strong></p>
-                    <ul style="padding-left: 20px;">
-                        ${listing.eligibility.map(elig => `<li>${elig}</li>`).join('')}
-                    </ul>
-                    <p><strong>Deadline:</strong> ${new Date(listing.deadline).toDateString()}</p>
+                <div id="show-details" class="card" style="margin: 16px; border: 1px solid #ddd; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                    <div class="card-header p-3 d-flex align-items-center" style="display: flex; justify-content: space-between; align-items: center;">
+                        <div class="d-flex align-items-center">
+                            <img src="${listing.logo}" alt="${listing.company} Logo" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover; margin-right: 10px;">
+                            <div>
+                                <h2 class="card-title" style="font-size: 24px; font-weight: bold; margin-bottom: 4px;">${listing.title}</h2>
+                                <p style="margin: 0; color: #777;">${listing.company}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-3">
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="margin-bottom: 10px;">
+                                <strong>Location:</strong> ${listing.location}
+                            </li>
+                            <li style="margin-bottom: 10px;">
+                                <strong>Updated On:</strong> ${new Date(listing.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card mt-3" style="margin: 16px; border: 1px solid #ddd; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                    <div class="card-body">
+                        <h4 style="text-align:left"><strong>Description:</strong></h4>
+                        <ul class="description-section" style="padding: 5px; text-align: left;">
+                            ${listing.description.map(desc => desc.split(';').map(point => `<li>${point.trim()}</li>`).join('')).join('')}
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <h4 style="text-align:left"><strong>Requirements:</strong></h4>
+                        <ul class="requirements-section" style="padding: 5px; text-align: left;">
+                            ${listing.requirements.map(req => req.split(';').map(point => `<li>${point.trim()}</li>`).join('')).join('')}
+                        </ul>
+                    </div>
+                </div>
+                <div class="card mt-3 p-3" style="margin: 16px; overflow: hidden; border: 1px solid #ddd; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                    <h4><strong>Additional Information</strong></h4>
+                    <div class="additional-info" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px;">
+                        <div style="flex: 1; min-width: 150px;">
+                            <strong>Job Type:</strong>
+                            <p>${listing.jobType}</p>
+                        </div>
+                        <div style="flex: 1; min-width: 150px;">
+                            <strong>Salary:</strong>
+                            <p>${listing.salary || 'Not specified'}</p>
+                        </div>
+                        <div style="flex: 1; min-width: 150px;">
+                            <strong>Eligibility:</strong>
+                            <p>${listing.eligibility.join(', ')}</p>
+                        </div>
+                    </div>
                 </div>
             `;
         }
+
     </script>
 </body>
 </html>

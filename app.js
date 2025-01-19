@@ -64,6 +64,7 @@ app.get("/listings/:id", wrapAsync(async (req, res) => {
 }));
 
 
+
 //Edit Route R
 app.get("/listings/:id/edit", wrapAsync(async (req, res) => {
     const listing = await Listing.findById(req.params.id);
