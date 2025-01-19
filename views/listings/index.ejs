@@ -1,138 +1,249 @@
-<style>
-    .card {
-        border: 1px solid #ddd;
-        border-radius: 10px; 
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
-        padding: 16px;
-        background-color: #fff; 
-        max-width: 350px; 
-        margin: 16px; 
-        font-family: Arial, sans-serif; 
-    }
+<%- layout("./layouts/boilerplate.ejs") %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Listings</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
 
-    .card-header {
-        display: flex; 
-        align-items: flex-start; 
-    }
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
 
-    .logo-column {
-        flex: 0 0 60px; 
-        display: flex;
-        justify-content: center; 
-        align-items: center;
-    }
+        .header {
+            padding: 16px;
+            background-color: #007bff;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-    .details-column {
-        flex: 1; 
-        padding-left: 12px; 
-    }
+        .header button {
+            padding: 10px 20px;
+            background-color: #fff;
+            color: #007bff;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
 
-    .rounded-circle-img {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 2px solid #eee;
-    }
+        .header button:hover {
+            background-color: #f0f0f0;
+        }
 
-    .card-title {
-        font-size: 18px;
-        font-weight: bold;
-        margin: 0;
-    }
+        .content {
+            display: flex;
+            flex: 1;
+            height: calc(160vh - 64px);
+        }
 
-    .card-subtitle {
-        font-size: 14px;
-        color: #777;
-        margin: 4px 0 8px 0;
-    }
+        .left-section {
+            flex: 1.2;
+            margin-left: -46px;
+            overflow-y: auto;
+            background-color: white;
+            padding: 5px;
+            border-right: 2px solid #ddd;
+            box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1);
+        }
 
-    .application-info {
-        font-size: 13px;
-        color: #555;
-        margin-bottom: 8px;
-    }
+        .right-section {
+            flex: 2;
+            padding: 16px;
+            background-color: #fff;
+            overflow-y: auto;
+        }
 
-    .eligibility-row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 6px;
-        margin-top: 8px;
-    }
+        .card {
+            /* border: 1px solid #ddd; */
+            border-radius: 10px;
+            padding: 10px;
+            background-color: white;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.3s ease;
+        }
 
-    .eligibility-border {
-        border: 1px solid #ddd;
-        padding: 6px 12px;
-        border-radius: 20px;
-        background-color: #f8f8f8;
-        font-size: 12px;
-        color: #555;
-    }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
 
-    .card-link {
-        display: inline-block;
-        margin-top: 16px;
-        color: #007bff;
-        text-decoration: none;
-        font-weight: bold;
-    }
+        .card-header {
+            display: flex;
+            align-items: flex-start;
+        }
 
-    .card-link:hover {
-        text-decoration: underline;
-    }
-</style>
+        .logo-column {
+            flex: 0 0 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo-column img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .details-column {
+            flex: 1;
+            padding-left: 12px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .card-subtitle {
+            font-size: 14px;
+            color: #777;
+            margin: 4px 0 8px 0;
+        }
+
+        .application-info {
+            font-size: 13px;
+            color: #555;
+        }
+
+        .eligibility-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .eligibility-row span {
+            border: 1px solid #ddd;
+            padding: 6px 12px;
+            border-radius: 20px;
+            background-color: #f8f8f8;
+            font-size: 12px;
+            color: #555;
+        }
+
+        #job-details {
+            text-align: center;
+            color: #555;
+        }
+
+        #job-details h3 {
+            margin-top: 20%;
+            font-size: 24px;
+        }
+
+        #job-details p {
+            font-size: 16px;
+        }
+    </style>
+</head>
 <body>
-    <form method="GET" action="/listings/new">
-        <button>Create New Listings</button>
-    </form>
-    <h1>Job Posts</h1>
+    <div class="container">
+        <!-- Header -->
+        <!-- <div class="header">
+            <h1 style="margin: 0; font-size: 20px;">Job Listings</h1>
+            <form method="GET" action="/listings/new">
+                <button>Create New Listings</button>
+            </form>
+        </div> -->
 
-    <div class="rows mt-3">
-        <script>
-            // Function to calculate the days left
-            function calculateDaysLeft(deadline) {
-                const currentDate = new Date();
-                const deadlineDate = new Date(deadline);
-                const timeDiff = deadlineDate - currentDate;
-                const daysLeft = Math.floor(timeDiff / (1000 * 3600 * 24));
-                return daysLeft >= 0 ? daysLeft : 'Expired';
-            }
+        <!-- Content -->
+        <div class="content">
+            <!-- Left Section -->
+            <div class="left-section">
+                <script>
+                    function calculateDaysLeft(deadline) {
+                        const currentDate = new Date();
+                        const deadlineDate = new Date(deadline);
+                        const timeDiff = deadlineDate - currentDate;
+                        const daysLeft = Math.floor(timeDiff / (1000 * 3600 * 24));
+                        return daysLeft >= 0 ? daysLeft : 'Expired';
+                    }
 
-            // Sort listings by days left
-            const sortedListings = <%- JSON.stringify(allListings)%>.map(listing => {
-                const daysLeft = calculateDaysLeft(listing.deadline);
-                return { ...listing, daysLeft };
-            }).sort((a, b) => {
-                if (a.daysLeft === 'Expired' && b.daysLeft !== 'Expired') return 1;
-                if (b.daysLeft === 'Expired' && a.daysLeft !== 'Expired') return -1;
-                return a.daysLeft - b.daysLeft;
-            });
+                    const sortedListings = <%- JSON.stringify(allListings) %>.map(listing => {
+                        const daysLeft = calculateDaysLeft(listing.deadline);
+                        return { ...listing, daysLeft };
+                    }).sort((a, b) => {
+                        if (a.daysLeft === 'Expired' && b.daysLeft !== 'Expired') return 1;
+                        if (b.daysLeft === 'Expired' && a.daysLeft !== 'Expired') return -1;
+                        return a.daysLeft - b.daysLeft;
+                    });
 
-            // Render sorted cards
-            sortedListings.forEach(listing => {
-                const daysLeftText = listing.daysLeft === 'Expired' ? 'Expired' : `${listing.daysLeft} days left`;
+                    sortedListings.forEach((listing, index) => {
+                        const daysLeftText = listing.daysLeft === 'Expired' ? 'Expired' : `${listing.daysLeft} days left`;
 
-                document.write(`
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="logo-column">
-                                <img src="${listing.logo}" alt="Company Logo" class="rounded-circle-img">
-                            </div>
-                            <div class="details-column">
-                                <h5 class="card-title">${listing.title}</h5>
-                                <h6 class="card-subtitle">${listing.company}</h6>
-                                <div class="application-info">
-                                    <p>${listing.appliedCount} applied &bull; ${daysLeftText}</p>
+                        document.write(`
+                            <div class="card" onclick="showDetails(${index})">
+                                <div class="card-header">
+                                    <div class="logo-column">
+                                        <img src="${listing.logo}" alt="Company Logo">
+                                    </div>
+                                    <div class="details-column">
+                                        <h5 class="card-title">${listing.title}</h5>
+                                        <h6 class="card-subtitle">${listing.company}</h6>
+                                        <div class="application-info">
+                                            <p>${listing.appliedCount || 0} applied &bull; ${daysLeftText}</p>
+                                        </div>
+                                        <div class="eligibility-row">
+                                            ${listing.eligibility.map(item => `<span>${item}</span>`).join('')}
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="eligibility-row">
-                                    ${listing.eligibility.map(item => `<span class="eligibility-border">${item}</span>`).join('')}
-                                </div>
                             </div>
-                        </div>
-                        <a href="/listings/${listing._id}" class="card-link">Details</a>
-                    </div>
-                `);
-            });
-        </script>
+                        `);
+                    });
+                </script>
+            </div>
+
+            <!-- Right Section -->
+            <div id="job-details" class="right-section">
+                <h3>Select a job to view details</h3>
+                <p>Click on a job card from the left side to see more information.</p>
+            </div>
+        </div>
     </div>
+
+    <script>
+        const listings = <%- JSON.stringify(allListings) %>;
+
+        function showDetails(index) {
+            const listing = listings[index];
+            const jobDetails = document.getElementById('job-details');
+            jobDetails.innerHTML = `
+                <div style="padding: 16px; border: 1px solid #ddd; border-radius: 10px; background-color: white; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                    <h2 style="font-size: 24px; font-weight: bold; margin-bottom: 8px;">${listing.title}</h2>
+                    <h4 style="font-size: 20px; color: #555; margin-bottom: 16px;">${listing.company}</h4>
+                    <p><strong>Location:</strong> ${listing.location}</p>
+                    <p><strong>Type:</strong> ${listing.jobType}</p>
+                    <p><strong>Salary:</strong> ${listing.salary || 'Not specified'}</p>
+                    <p><strong>Requirements:</strong></p>
+                    <ul style="padding-left: 20px;">
+                        ${listing.requirements.map(req => `<li>${req}</li>`).join('')}
+                    </ul>
+                    <p><strong>Eligibility:</strong></p>
+                    <ul style="padding-left: 20px;">
+                        ${listing.eligibility.map(elig => `<li>${elig}</li>`).join('')}
+                    </ul>
+                    <p><strong>Deadline:</strong> ${new Date(listing.deadline).toDateString()}</p>
+                </div>
+            `;
+        }
+    </script>
 </body>
+</html>
