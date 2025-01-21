@@ -143,12 +143,123 @@
         .card.selected {
             border-left: 5px solid blue; 
         }
+        /* Media Queries for Responsiveness */
+        @media (max-width: 1024px) {
+            .content {
+                flex-direction: column;
+            }
+
+            .left-section {
+                flex: 1;
+                border-right: none;
+                box-shadow: none;
+                margin-bottom: 10px;
+            }
+
+            .right-section {
+                flex: 1;
+            }
+
+            .card-title {
+                font-size: 16px;
+            }
+
+            .card-subtitle {
+                font-size: 12px;
+            }
+
+            .eligibility-row span {
+                font-size: 10px;
+            }
+
+            .logo-column img {
+                width: 40px;
+                height: 40px;
+            }
+
+            #job-details h3 {
+                font-size: 20px;
+            }
+            
+            .right-section {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+        .content {
+            flex-direction: column;
+        }
+
+        .left-section {
+            flex: 1;
+            border-right: none;
+            box-shadow: none;
+            margin-bottom: 10px;
+        }
+
+        .right-section {
+            display: none; 
+        }
+
+        .card-title {
+            font-size: 16px;
+        }
+
+        .card-subtitle {
+            font-size: 12px;
+        }
+
+        .eligibility-row span {
+            font-size: 10px;
+        }
+
+        .logo-column img {
+            width: 40px;
+            height: 40px;
+        }
+
+        #job-details h3 {
+            font-size: 20px;
+        }
+    }
+
+        @media (max-width: 480px) {
+            .card-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .details-column {
+                padding-left: 0;
+            }
+
+            .logo-column {
+                margin-bottom: 10px;
+            }
+
+            .card-title {
+                font-size: 14px;
+            }
+
+            .card-subtitle {
+                font-size: 10px;
+            }
+
+            .eligibility-row span {
+                font-size: 8px;
+                padding: 3px 6px;
+            }
+
+            #job-details h3 {
+                font-size: 16px;
+            }
+        }
 
     </style>
 </head>
 <body>
     <div class="header">
-            <h1 style="margin: 0; font-size: 20px;">Job Listings</h1>
             <form method="GET" action="/listings/new">
             <button>Create New Listings</button>
         </form>
@@ -227,7 +338,11 @@
                 console.error("Listing not found at index " + index);
                 return;
             }
-            
+
+        if (window.innerWidth <= 1024) {
+            window.location.href = `/listings/${listing._id}`;
+            return;
+        }
             // Remove 'selected' class from all job cards
             const allCards = document.querySelectorAll('.card');
             allCards.forEach(card => card.classList.remove('selected'));
