@@ -5,10 +5,6 @@ const studentInfoSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    clgName: {
-        type: String,
-        required: true
-    },
     about: {
         type: String,
         minLength: 10
@@ -26,7 +22,18 @@ const studentInfoSchema = mongoose.Schema({
     },
     education: {
         type: String,
-        required: true
+        required: true,
+        subSummary: {
+            Qualification: {
+                type: String,
+                required: true
+            },
+            Course: {
+                type: String,
+                required: true
+            },
+            
+        }
     },
     projects: {
         type: String
