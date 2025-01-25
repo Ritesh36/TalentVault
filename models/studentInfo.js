@@ -33,6 +33,34 @@ const studentInfoSchema = mongoose.Schema({
     },
     achievements: {
         type: String
+    },
+    gmail:{
+        type: String,
+        required: true
+    },
+    linkedin:{
+        type: String
+    },
+    github:{
+        type: String
+    },
+    instagram:{
+        type: String
+    },
+    profilePic:{
+        type: String
+    },
+    resume:{
+        type: String
+    },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true
+    },
+    date: {
+        type: Date,
+        default: Date.now
     }
 })
 
