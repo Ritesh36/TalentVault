@@ -86,6 +86,12 @@ app.delete("/listings/:id", wrapAsync(async (req, res) => {
 }));
 
 
+//signup Route R
+app.get("/signup", (req, res) => {
+    res.render("users/signup");
+});
+
+
 //comapny name S
 app.get('/api/companies', (req, res) => {
     const query = req.query.query.toLowerCase();
