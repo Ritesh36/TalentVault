@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #f5f5f5;
+            margin: 0;
+        }
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            border-top-right-radius: 50px;
+            border-bottom-left-radius:100px ;
+        }
+        .image-container {
+            background: orange;
+            padding: 10px;
+            border-radius: 10px;
+            border-bottom-left-radius:50px ;
+        }
+        /* .image-container img {
+            width: 150px;
+            height: auto;
+        } */
+        .signup-container {
+            /* background: white; */
+            padding: 30px;
+            border-radius: 10px;
+            /* box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); */
+            width: 400px;
+            border-top-right-radius: 50px;
+            margin-left: 20px;
+        }
+        .toggle-buttons {
+            display: flex;
+            justify-content: space-between;
+            background: #e6e6e6;
+            border-radius: 20px;
+            padding: 5px;
+        }
+        .toggle-buttons button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background: transparent;
+        }
+        .toggle-buttons .active {
+            background: #4a54e1;
+            color: white;
+        }
+        .form-group {
+            margin: 15px 0;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .gender-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+        .gender-buttons button {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background: white;
+            font-size: 14px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .gender-buttons .active {
+            background: #4a54e1;
+            color: white;
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 10px;
+            background: #4a54e1;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .login-link {
+            text-align: center;
+            margin-top: 15px;
+        }
+        .login-link a {
+            color: #4a54e1;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="image-container">
+            <img src="images/writer.png" alt="Signup">
+        </div>
+        <div class="signup-container">
+            <h2>Sign Up</h2>
+            <div class="toggle-buttons">
+                <button id="candidateBtn" class="active" onclick="toggleForm('candidate')">As Candidate</button>
+                <button id="recruiterBtn" onclick="toggleForm('recruiter')">As Recruiter</button>
+            </div>
+            
+            <form id="signupForm">
+                <div class="form-group">
+                    <label>First Name *</label>
+                    <input type="text" required>
+                </div>
+                <div class="form-group">
+                    <label>Last Name *</label>
+                    <input type="text" required>
+                </div>
+                <div class="form-group" id="emailGroup">
+                    <label>Email *</label>
+                    <input type="email" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone *</label>
+                    <input type="tel" required>
+                </div>
+                <div class="form-group">
+                    <label>Gender *</label>
+                    <div class="gender-buttons">
+                        <button type="button" class="gender-btn" onclick="selectGender(this)">Male</button>
+                        <button type="button" class="gender-btn" onclick="selectGender(this)">Female</button>
+                        <button type="button" class="gender-btn" onclick="selectGender(this)">More Options</button>
+                    </div>
+                </div>
+                <button type="submit" class="submit-btn">Next</button>
+            </form>
+            <div class="login-link">
+                Already have an account? <a href="#">Login</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleForm(type) {
+            document.getElementById('candidateBtn').classList.remove('active');
+            document.getElementById('recruiterBtn').classList.remove('active');
+
+            let emailGroup = document.getElementById('emailGroup');
+            let emailLabel = emailGroup.querySelector("label");
+            let emailInput = emailGroup.querySelector("input");
+
+            if (type === 'candidate') {
+                document.getElementById('candidateBtn').classList.add('active');
+                emailLabel.innerText = "Email *";
+                emailInput.setAttribute("type", "email");
+            } else {
+                document.getElementById('recruiterBtn').classList.add('active');
+                emailLabel.innerText = "Organization Email *";
+                emailInput.setAttribute("type", "email");
+            }
+        }
+        
+        function selectGender(button) {
+            document.querySelectorAll('.gender-btn').forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+        }
+    </script>
+</body>
+</html>
