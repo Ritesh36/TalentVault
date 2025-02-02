@@ -315,9 +315,13 @@
                     
                     window.onload = function() {
                         const firstValidJob = sortedListings.find(listing => listing.daysLeft !== 'Expired');
-                        const firstJobIndex = firstValidJob ? firstValidJob.originalIndex : sortedListings[0].originalIndex;
-                        showDetails(firstJobIndex);
+                        const firstJobIndex = firstValidJob ? firstValidJob.originalIndex : sortedListings[0]?.originalIndex;
+
+                        if (firstJobIndex !== undefined) {
+                            showDetails(firstJobIndex);
+                        }
                     };
+
                 </script>
             </div>
 
