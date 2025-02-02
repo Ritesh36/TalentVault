@@ -2,6 +2,14 @@ const moongoose = require('mongoose');
 const passportLocalMongoose = require('passport-local-mongoose');
 
 const employeeUserSchema = moongoose.Schema({
+    frist_name: {
+        type: String,
+        required: true
+    },
+    last_name: {
+        type: String,
+        required: true
+    },
     email: {
         type: String,
         required: true,
@@ -15,14 +23,6 @@ const employeeUserSchema = moongoose.Schema({
         type: String,
         required: true
     },
-    frist_name: {
-        type: String,
-        required: true
-    },
-    last_name: {
-        type: String,
-        required: true
-    },
     phone_no: {
         type: Number,
         required: true
@@ -30,9 +30,7 @@ const employeeUserSchema = moongoose.Schema({
     gender: {
         type: String,
         required: true
-    },
-
-
+    }
 });
 
 userSchema.plugin(passportLocalMongoose);
