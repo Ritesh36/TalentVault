@@ -77,7 +77,6 @@ app.put("/listings/:id", wrapAsync(async (req, res) => {
     res.redirect(`/listings/${id}`);
 }));
 
-
 //Delete Route  R
 app.delete("/listings/:id", wrapAsync(async (req, res) => {
     let {id} = req.params;
