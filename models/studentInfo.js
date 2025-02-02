@@ -1,18 +1,9 @@
 const mongoose = require("mongoose");
 
 const studentInfoSchema = mongoose.Schema({
-    name: {
-        type: String,
-        required: true
-    },
     about: {
         type: String,
         minLength: 10
-    },
-    mobileNo: {
-        type: Number,
-        required: true,
-        min: 10
     },
     certifications: {
         type: String
@@ -21,8 +12,6 @@ const studentInfoSchema = mongoose.Schema({
         type: String
     },
     education: {
-        type: String,
-        required: true,
         subSummary: {
             Qualification: {
                 type: String,
@@ -41,9 +30,8 @@ const studentInfoSchema = mongoose.Schema({
     achievements: {
         type: String
     },
-    gmail:{
-        type: String,
-        required: true
+    skills: {
+        type: String
     },
     linkedin:{
         type: String
@@ -60,15 +48,11 @@ const studentInfoSchema = mongoose.Schema({
     resume:{
         type: String
     },
-    user: {
+    Student_user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        ref: "student_user",
         required: true
     },
-    date: {
-        type: Date,
-        default: Date.now
-    }
 })
 
 module.exports = new mongoose.model("StudentInfo", studentInfoSchema);
