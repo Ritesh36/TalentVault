@@ -90,6 +90,11 @@ app.get("/signup", (req, res) => {
     res.render("users/signup");
 });
 
+// Login Route
+app.get("/login", (req, res) => {
+    res.render("users/login");
+});
+
 
 //comapny name S
 app.get('/api/companies', (req, res) => {
