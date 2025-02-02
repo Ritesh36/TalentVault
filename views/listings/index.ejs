@@ -343,10 +343,10 @@
                 return;
             }
 
-        if (window.innerWidth <= 1024) {
-            window.location.href = `/listings/${listing._id}`;
-            return;
-        }
+            if (window.innerWidth <= 1024) {
+                window.location.href = `/listings/${listing._id}`;
+                return;
+            }
             // Remove 'selected' class from all job cards
             const allCards = document.querySelectorAll('.card');
             allCards.forEach(card => card.classList.remove('selected'));
@@ -412,6 +412,9 @@
                     </div>
                 </div>
             `;
+            jobDetails.onclick = function () {
+                window.location.href = `/listings/${listing._id}`;
+            };
         }
 
     </script>
