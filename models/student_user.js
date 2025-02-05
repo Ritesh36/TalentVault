@@ -1,7 +1,7 @@
 const moongoose = require('mongoose');
 const passportLocalMongoose = require('passport-local-mongoose');
 
-const employeeUserSchema = moongoose.Schema({
+const studentUserSchema = moongoose.Schema({
     frist_name: {
         type: String,
         required: true
@@ -33,6 +33,6 @@ const employeeUserSchema = moongoose.Schema({
     }
 });
 
-userSchema.plugin(passportLocalMongoose);
+employeeUserSchema.plugin(passportLocalMongoose);
 
-module.exports = new moongoose.model("EmployeeUser", employeeUserSchema);
+module.exports = new moongoose.model("EmployeeUser", studentUserSchema);
