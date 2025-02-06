@@ -144,11 +144,13 @@
         <div class="signup-container">
             <h2>Sign Up</h2>
             <div class="toggle-buttons">
-                <button id="candidateBtn" class="active" onclick="toggleForm('candidate')">As Candidate</button>
-                <button id="recruiterBtn" onclick="toggleForm('recruiter')">As Recruiter</button>
+                <button id="candidateBtn" class="active" onclick="toggleForm('candidate')" type="button">As Candidate</button>
+                <button id="recruiterBtn" onclick="toggleForm('recruiter')" type="button">As Recruiter</button>
             </div>
             
             <form id="signupForm" method="POST" action="/signup">
+                <input type="hidden" name="userType" value="candidate">
+                <input type="hidden" name="gender" id="selectGender" value="">
                 <div class="form-group">
                     <label>First Name *</label>
                     <input type="text" value="first_name" required>
@@ -211,6 +213,7 @@
         function selectGender(button) {
             document.querySelectorAll('.gender-btn').forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
+            document.getElementById('gender').value = button.value;
         }
     </script>
 </body>
