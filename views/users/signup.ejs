@@ -148,43 +148,43 @@
                 <button id="recruiterBtn" onclick="toggleForm('recruiter')">As Recruiter</button>
             </div>
             
-            <form id="signupForm">
+            <form id="signupForm" method="POST" action="/signup">
                 <div class="form-group">
                     <label>First Name *</label>
-                    <input type="text" required>
+                    <input type="text" value="first_name" required>
                 </div>
                 <div class="form-group">
                     <label>Last Name *</label>
-                    <input type="text" required>
+                    <input type="text" value="last_name" required>
                 </div>
                 <div class="form-group" id="emailGroup">
                     <label>Email *</label>
-                    <input type="email" required>
+                    <input type="email" value="email" required>
                 </div>
                 <div class="form-group">
                     <label>Phone *</label>
-                    <input type="tel" required>
+                    <input type="tel" value="tel" required>
                 </div>
                 <div class="form-group">
                     <label>Password *</label>
-                    <input type="password" required>
+                    <input type="password" value="password" required>
                 </div>
                 <div class="form-group">
                     <label>Confirm Password *</label>
-                    <input type="password" required>
+                    <input type="password" value="Confirm_password" required>
                 </div>
                 <div class="form-group">
                     <label>Gender *</label>
                     <div class="gender-buttons">
-                        <button type="button" class="gender-btn" onclick="selectGender(this)">Male</button>
-                        <button type="button" class="gender-btn" onclick="selectGender(this)">Female</button>
-                        <button type="button" class="gender-btn" onclick="selectGender(this)">More Options</button>
+                        <button type="button" class="gender-btn" value="male" onclick="selectGender(this)">Male</button>
+                        <button type="button" class="gender-btn" value="female" onclick="selectGender(this)">Female</button>
+                        <button type="button" class="gender-btn" value="More" onclick="selectGender(this)">More Options</button>
                     </div>
                 </div>
                 <button type="submit" class="submit-btn">Next</button>
             </form>
             <div class="login-link">
-                Already have an account? <a href="#">Login</a>
+                Already have an account? <a href="/login">Login</a>
             </div>
         </div>
     </div>

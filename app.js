@@ -126,7 +126,7 @@ app.post("/signup", wrapAsync(async (req, res) => {
     });
 
     await UserModel.register(newUser, password);
-    res.redirect("/login");
+    res.redirect("/listings");
 }));
 
 // Login Route
