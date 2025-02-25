@@ -181,11 +181,11 @@
 
                 // Update the hidden field with new data
                 updateDescriptionField();
-                input.value = ''; // Clear the input
+                input.value = '';
             }
         }
 
-        // Function to update the hidden input field with all description points
+        // Function to update the hidden input field 
         function updateDescriptionField() {
             const listItems = document.querySelectorAll('#descriptionList li .description-text');
             const points = Array.from(listItems).map(item => item.textContent.trim());
@@ -193,7 +193,7 @@
             console.log('Updated descriptionField value:', document.getElementById('descriptionField').value);
         }
 
-            // Function to update the hidden input field with all description points
+            //  update the hidden input field
         function updateDescriptionField() {
             const listItems = document.querySelectorAll('#descriptionList li .description-text');
             const points = Array.from(listItems).map(item => item.textContent.trim());
