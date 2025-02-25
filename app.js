@@ -111,6 +111,13 @@ app.delete("/listings/:id", wrapAsync(async (req, res) => {
     res.redirect("/listings");
 }));
 
+
+//Student Route
+app.get("/students", wrapAsync(async (req, res) => {
+    let allStudents = await StudentUser.find();
+    res.render("students/index", { allStudents });
+}));
+
 // Signup Route
 app.get("/signup", (req, res) => res.render("users/signup"));
 
